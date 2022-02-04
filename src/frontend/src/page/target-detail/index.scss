@@ -1,0 +1,44 @@
+.color-box{
+    display: block;
+    height: 160px;
+    text-align: center;
+    padding: 20px 0;
+    opacity: .9;
+    transition: all .3s;
+    &:hover{
+        text-decoration: none;
+        color: #555;
+        opacity: 1;
+        transform: scale(1.08);
+    }
+    &:focus{
+        text-decoration: none;
+    }
+    .count{
+        font-size: 50px;
+        height: 80px;
+        line-height: 80px;
+    }
+    .desc{
+        font-size: 18px;
+        .fa{
+            margin-right: 5px;
+        }
+    }
+}
+.content-left {
+    border-right: 4px solid white;
+}
+
+.text-25{
+    padding-top: 25px;
+    padding-bottom: 15px;
+    font-size: 25px;
+}
+.display-inline {
+    display: inline-block;
+}
+input.big-checkBox {
+    transform : scale(1.8) !important;
+}
+

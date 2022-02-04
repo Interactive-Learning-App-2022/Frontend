@@ -1,0 +1,88 @@
+.color-box{
+    display: block;
+    height: 160px;
+    text-align: center;
+    padding: 20px 0;
+    opacity: .9;
+    transition: all .3s;
+    &:hover{
+        text-decoration: none;
+        color: #555;
+        opacity: 1;
+        transform: scale(1.08);
+    }
+    &:focus{
+        text-decoration: none;
+    }
+    .count{
+        font-size: 50px;
+        height: 80px;
+        line-height: 80px;
+    }
+    .desc{
+        font-size: 18px;
+        .fa{
+            margin-right: 5px;
+        }
+    }
+}
+.success {
+    background-color: #01CF85;
+    color: white;
+    a {
+        color: white;
+    }
+}
+
+.warning {
+    background-color: #FFD800;
+    color: white;
+    a {
+        color: white;
+    }
+}
+
+.alert {
+    background-color: #FE4C4C;
+    color: white;
+    a {
+        color: white;
+    }
+}
+.dot-green {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    margin-top: 3px;
+    margin-right: 8px;
+    border: 1px solid rgba(0, 0, 0, .2);
+    background: #04E49B;
+    display: block;
+}
+.dot-yellow {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    margin-top: 3px;
+    margin-right: 8px;
+    border: 1px solid rgba(0, 0, 0, .2);
+    background: #FFD800;
+    display: block;
+}
+.dot-red {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    margin-top: 3px;
+    margin-right: 8px;
+    border: 1px solid rgba(0, 0, 0, .2);
+    background: #FE4C4C;
+    display: block;
+}
+.text-bold {
+    font-weight: 800;
+    color: #AFB0B2;
+}
