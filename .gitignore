@@ -7,3 +7,4 @@ src/backend/account/api/__pycache__/
 src/backend/backend/__pycache__/
 src/backend/classes/__pycache__/
 src/backend/classes/__pycache__/
+src/backend/db.sqlite
