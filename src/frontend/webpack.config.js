@@ -82,6 +82,19 @@ module.exports = {
                     }
                 ]
             },
+            //mp4 video
+            {
+                test: /\.mp4$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "[name].[ext]",
+                            outputPath: "video"
+                        }
+                    }
+                ]
+            }, 
             // font and icons
             {
                 test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
@@ -121,4 +134,8 @@ module.exports = {
             index: '/dist/index.html'
         }
     }
+    // externals: {
+    //     'react': 'React'
+    // }
+    
 };
