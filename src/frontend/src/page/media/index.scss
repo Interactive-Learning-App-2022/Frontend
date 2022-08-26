@@ -1,4 +1,4 @@
-.color-box{
+/*.color-box{
     display: block;
     height: 160px;
     text-align: center;
@@ -25,5 +25,39 @@
             margin-right: 5px;
         }
     }
+}*/ 
+.App .right{
+    background:aqua; 
+}
+.App .left{
+    background: white; 
+    
+}
+.App .left, 
+.App .right{
+    width: 100%; 
+    height: 50vh; 
+    
+}
+
+@media screen and (min-width:1200px) {
+
+    .App {
+        padding-left: 17%; 
+        display: flex; 
+
+    }
+    .App .left{
+        padding: 10%; 
+        
+    
+    }
+    .App .left, 
+    .App .right{
+        width: 50%; 
+        height: 100vh; 
+        
+    }
+
 }
 

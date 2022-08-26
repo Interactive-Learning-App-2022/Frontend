@@ -160,6 +160,17 @@ class StandardDetail extends React.Component {
                             }
                         </ul>
                     </div>
+                    
+                    {/* List of all standards */ }
+                    {/*
+                    <div className = "full-standards"> 
+                    {
+                        this.grade.standard.
+                    }
+                    </div>
+                    {/* End of standards list */ }
+
+
 
                     <div className="databases">
 
