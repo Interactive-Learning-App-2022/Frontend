@@ -73,3 +73,10 @@ class AssessmentAssignedModel(models.Model):
     )
     status = models.CharField(max_length=1, choices=STATUS_NUMBERS)
     proficient = models.CharField(max_length=1, choices=PROFICIENT, default='0')
+
+class VideoModuleModel(models.Model):
+    source = models.CharField(max_length=255, default='N/A')
+    timestamps = models.JSONField(encoder=None, decoder=None, default=dict)
+    proficiency_id = models.ForeignKey(
+        Proficiency, on_delete=models.CASCADE, null=True
+    )

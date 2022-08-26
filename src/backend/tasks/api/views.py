@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import viewsets, filters, generics
 from rest_framework.response import Response
 from classes.models import ClassModel
-from .serializers import AssessmentsAssignedSerializer, TaskSerializer, TasksAssignedSerializer, TasksAssignedCreator, AssessmentsAssignedCreator, AssessmentSerializer
-from tasks.models import AssessmentAssignedModel, TasksModel, ScoreInfomation, TasksAssignedModel, AssessmentModel
+from .serializers import AssessmentsAssignedSerializer, TaskSerializer, TasksAssignedSerializer, TasksAssignedCreator, AssessmentsAssignedCreator, AssessmentSerializer, VideoModuleSerializer
+from tasks.models import AssessmentAssignedModel, TasksModel, ScoreInfomation, TasksAssignedModel, AssessmentModel, VideoModuleModel
 from django.contrib.auth.models import User
 from django.db.models import Q, query
 
@@ -109,3 +109,9 @@ class AssessmentAssignedAPIView(viewsets.ModelViewSet):
             return object_list
 
         return AssessmentAssignedModel.objects.all()
+
+class VideoModuleAPIView(viewsets.ModelViewSet):
+    serializer_class = VideoModuleSerializer
+    model = VideoModuleModel
+
+    queryset = VideoModuleModel.objects.all()

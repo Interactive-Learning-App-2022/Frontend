@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from classes.api.serializers import ClassSerializer
 from account.api.serializers import UserSerializer
-from tasks.models import TasksModel, ScoreInfomation, TasksAssignedModel, AssessmentModel, AssessmentAssignedModel
+from tasks.models import TasksModel, ScoreInfomation, TasksAssignedModel, AssessmentModel, AssessmentAssignedModel, VideoModuleModel
 from scores.api.serializers import ScoreSerializer
 
 
@@ -71,4 +71,9 @@ class AssessmentsAssignedSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AssessmentAssignedModel
+        fields = ('__all__')
+
+class VideoModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoModuleModel
         fields = ('__all__')

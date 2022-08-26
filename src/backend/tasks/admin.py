@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TasksModel, ScoreInfomation, TasksAssignedModel, AssessmentModel, AssessmentAssignedModel
+from .models import TasksModel, ScoreInfomation, TasksAssignedModel, AssessmentModel, AssessmentAssignedModel, VideoModuleModel
 
 # Register your models here.
 
@@ -19,7 +19,11 @@ class AssessmentsAssignedAdmin(admin.ModelAdmin):
     list_display = ('id', 'assessment_id', 'class_id',
                     'assigned_student', 'proficiency_id','status', 'proficient')
 
+class VideoModuleAdmin(admin.ModelAdmin):
+    list_display = ('id', 'proficiency_id', 'source', 'timestamps')
+
 admin.site.register(TasksModel, TasksAdmin)
 admin.site.register(TasksAssignedModel, TasksAssignedAdmin)
 admin.site.register(AssessmentModel, AssessmentsAdmin)
 admin.site.register(AssessmentAssignedModel, AssessmentsAssignedAdmin)
+admin.site.register(VideoModuleModel, VideoModuleAdmin)
