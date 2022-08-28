@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*.color-box{
     display: block;
     height: 160px;
@@ -28,39 +27,85 @@
     }
 }*/ 
 .App .right{
-    background:aqua; 
+    background: rgb(235, 245, 191); 
 }
 .App .left{
     background: white; 
-    
-}
-.App .left, 
-.App .right{
-    width: 100%; 
-    height: 50vh; 
-    
 }
 
-@media screen and (min-width:1200px) {
+  @media screen and (min-width: 768px) and (max-width: 1600px){
+    .App { 
+      padding-top: 70px ; 
+      padding-left: 260px; 
+      display: flex; 
+    }
+
+    #video{
+      align-self: center; 
+      position: relative; 
+      aspect-ratio: 16/9; 
+      max-width: 94%; 
+      left: 3%; 
+      right: 3%; 
+      padding-top: 20px; 
+    }
+
+    .App .left{
+      width: 70%; 
+      height: 100vh; 
+      position: relative; 
+      display: flex; 
+      overflow: scroll; 
+      align-items: center; 
+      justify-content: center; 
+
+    }
+
+    .App .right{
+      width: 30%; 
+      height: 100vh; 
+      position: relative; 
+      display: flex; 
+      overflow: scroll; 
+      align-items: center; 
+      justify-content: center; 
+    }
+
+  }
+
+@media screen and (min-width:600px) and (max-width: 767px) {
 
     .App {
-        padding-left: 17%; 
+        height: 100%; 
         display: flex; 
+        flex-direction: column; 
+    }
 
+    .App .div .left, 
+    .App .div .right{
+        width: 100%; 
+        position: relative; 
+        overflow: scroll; 
+        height: 50%;  
     }
     .App .left{
-        padding: 10%; 
-        
-    
-    }
-    .App .left, 
-    .App .right{
-        width: 50%; 
-        height: 100vh; 
-        
+      flex: 1; 
     }
 
-=======
+    .App .right{
+        flex: 1; 
+    }
+    #video{
+      align-self: center; 
+      position: relative; 
+      aspect-ratio: 16/9; 
+      max-height: 50%; 
+      max-width: 100%; 
+    }
+  }
+
+  
+
 // .color-box{
 //     display: block;
 //     height: 160px;
@@ -110,9 +155,47 @@
 //   top: 10%
 // }
 
+//CHANGE TRYING TO FIX FULLSCREEN 
 
+@media screen and (min-width: 1200px){
+  .App {
+    padding-top: 70px ;
+    padding-left: 260px;
+    display: flex;
+  }
+  #video{
+    align-self: center;
+    position: relative;
+    aspect-ratio: 16/9;
+    max-width: 94%;
+    left: 3%;
+    right: 3%;
+    padding-top: 20px;
+  }
 
+  .App .left{
+    width: 70%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
 
+  }
+  .App .right{
+    width: 30%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
+  }
+
+}
+
+//END OF CHANGE
 
 
 @media screen and (min-width:1025px) and (max-width: 1600px) { 
@@ -181,6 +264,5 @@
       // top: 10%;
     }
     
->>>>>>> refs/remotes/origin/tilok
 }
 
