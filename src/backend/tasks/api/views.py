@@ -114,4 +114,14 @@ class VideoModuleAPIView(viewsets.ModelViewSet):
     serializer_class = VideoModuleSerializer
     model = VideoModuleModel
 
-    queryset = VideoModuleModel.objects.all()
+    def get_queryset(self):
+        if 'id' in self.request.GET and self.request.GET['id']:
+            idq = self.request.GET.get('id')
+
+            VideoModule = VideoModuleModel.objects.filter(
+                Q(proficiency_id=idq))
+
+            return VideoModule
+
+        return VideoModuleModel.objects.all()
+        
