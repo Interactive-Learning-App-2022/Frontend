@@ -25,86 +25,81 @@
             margin-right: 5px;
         }
     }
-}*/ 
-.App .right{
-    background: rgb(235, 245, 191); 
+}*/
+.App .right {
+  background: rgb(235, 245, 191);
 }
-.App .left{
-    background: white; 
+.App .left {
+  background: white;
 }
 
-  @media screen and (min-width: 768px) and (max-width: 1600px){
-    .App { 
-      padding-top: 70px ; 
-      padding-left: 260px; 
-      display: flex; 
-    }
-
-    #video{
-      align-self: center; 
-      position: relative; 
-      aspect-ratio: 16/9; 
-      max-width: 94%; 
-      left: 3%; 
-      right: 3%; 
-      padding-top: 20px; 
-    }
-
-    .App .left{
-      width: 70%; 
-      height: 100vh; 
-      position: relative; 
-      display: flex; 
-      overflow: scroll; 
-      align-items: center; 
-      justify-content: center; 
-
-    }
-
-    .App .right{
-      width: 30%; 
-      height: 100vh; 
-      position: relative; 
-      display: flex; 
-      overflow: scroll; 
-      align-items: center; 
-      justify-content: center; 
-    }
-
+@media screen and (min-width: 768px) and (max-width: 1600px) {
+  .App {
+    padding-top: 70px;
+    padding-left: 260px;
+    display: flex;
   }
 
-@media screen and (min-width:600px) and (max-width: 767px) {
-
-    .App {
-        height: 100%; 
-        display: flex; 
-        flex-direction: column; 
-    }
-
-    .App .div .left, 
-    .App .div .right{
-        width: 100%; 
-        position: relative; 
-        overflow: scroll; 
-        height: 50%;  
-    }
-    .App .left{
-      flex: 1; 
-    }
-
-    .App .right{
-        flex: 1; 
-    }
-    #video{
-      align-self: center; 
-      position: relative; 
-      aspect-ratio: 16/9; 
-      max-height: 50%; 
-      max-width: 100%; 
-    }
+  #video {
+    align-self: center;
+    position: relative;
+    aspect-ratio: 16/9;
+    max-width: 94%;
+    left: 3%;
+    right: 3%;
+    padding-top: 20px;
   }
 
-  
+  .App .left {
+    width: 70%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .App .right {
+    width: 30%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 767px) {
+  .App {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .App .div .left,
+  .App .div .right {
+    width: 100%;
+    position: relative;
+    overflow: scroll;
+    height: 50%;
+  }
+  .App .left {
+    flex: 1;
+  }
+
+  .App .right {
+    flex: 1;
+  }
+  #video {
+    align-self: center;
+    position: relative;
+    aspect-ratio: 16/9;
+    max-height: 50%;
+    max-width: 100%;
+  }
+}
 
 // .color-box{
 //     display: block;
@@ -138,11 +133,11 @@
 // body {
 //     background: #EEEEEE;
 //   }
- 
-.App .right{
-  background:aqua;
+
+.App .right {
+  background: aqua;
 }
-.App .left{
+.App .left {
   background: white;
 }
 
@@ -155,15 +150,15 @@
 //   top: 10%
 // }
 
-//CHANGE TRYING TO FIX FULLSCREEN 
+//CHANGE TRYING TO FIX FULLSCREEN
 
-@media screen and (min-width: 1200px){
+@media screen and (min-width: 1200px) {
   .App {
-    padding-top: 70px ;
+    padding-top: 70px;
     padding-left: 260px;
     display: flex;
   }
-  #video{
+  #video {
     align-self: center;
     position: relative;
     aspect-ratio: 16/9;
@@ -173,7 +168,7 @@
     padding-top: 20px;
   }
 
-  .App .left{
+  .App .left {
     width: 70%;
     height: 100vh;
     position: relative;
@@ -181,9 +176,8 @@
     overflow: scroll;
     align-items: center;
     justify-content: center;
-
   }
-  .App .right{
+  .App .right {
     width: 30%;
     height: 100vh;
     position: relative;
@@ -192,21 +186,18 @@
     align-items: center;
     justify-content: center;
   }
-
 }
 
 //END OF CHANGE
 
-
-@media screen and (min-width:1025px) and (max-width: 1600px) { 
+@media screen and (min-width: 1025px) and (max-width: 1600px) {
   .App {
-    padding-top: 70px ;
+    padding-top: 70px;
     padding-left: 260px;
     display: flex;
-
   }
 
-  #video{
+  #video {
     align-self: center;
     position: relative;
     aspect-ratio: 16/9;
@@ -216,7 +207,7 @@
     padding-top: 20px;
   }
 
-  .App .left{
+  .App .left {
     width: 70%;
     height: 100vh;
     position: relative;
@@ -224,29 +215,27 @@
     overflow: scroll;
     align-items: center;
     justify-content: center;
-
   }
-  .App .right{
-  width: 30%;
-  height: 100vh;
-  position: relative;
-  display: flex;
-  overflow: scroll;
-  align-items: center;
-  justify-content: center;
-}
-
+  .App .right {
+    width: 30%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 @media screen and (min-width: 320px) and (max-width: 800px) {
-  .App{
+  .App {
     height: 100%;
     display: flex;
     // padding-top: 400px;
   }
 
-  .App .div .left, 
-  .App .div .right{
+  .App .div .left,
+  .App .div .right {
     // height: 25vh;
     width: 100%;
     position: relative;
@@ -255,14 +244,21 @@
     height: 50%;
   }
 
-  #video{
-      align-self: center;
-      position: relative;
-      aspect-ratio: 16/9;
-      max-height: 30%;
-      // left: 10%;
-      // top: 10%;
-    }
-    
+  #video {
+    align-self: center;
+    position: relative;
+    aspect-ratio: 16/9;
+    max-height: 30%;
+    // left: 10%;
+    // top: 10%;
+  }
 }
 
+.right {
+  flex-direction: column;
+}
+
+.right-questions {
+  white-space: pre-wrap;
+  padding-bottom: 2em;
+}

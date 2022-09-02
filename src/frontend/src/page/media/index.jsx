@@ -4,38 +4,39 @@ import { VueInReact } from "vuera";
 
 const _mm = new MUtil();
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.scss";
-// import YouTube from 'react-youtube';
 import ReactPlayer from "react-player/youtube";
-
-//opt variables for the Youtube player.
-const opt = {
-  playerVars: {
-    //Disable keyboard input for video player
-    disablekb: 1,
-    // Disable full screen icon/button
-    fs: 0,
-    // Disables Youtube logo
-    modestbranding: 1,
-    //Allows video to play on mobile without fullscreening
-    playsinline: 1,
-    //Disables suggested videos
-    rel: 0,
-    //Enables manipulating video player through iframe api
-    enablejsapi: 1,
-  },
-};
+// import { set } from "vue/types/umd";
 
 export default function App() {
   const [elapsed, setElapsed] = useState(0);
-  // const [seeking, setSeeking] = useState(false);
+  const [nextTS, setNextTS] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState("");
+  const [currentAnswer, setCurrentAnswer] = useState("");
+  const [actualAnswer, setActualAnswer] = useState("");
 
-  const playerRef = useRef();
+  const apiCall = JSON.parse(
+    '[[184, "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", [3, 7, 4, 5]], [289, "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", [2, 6, 3, 8]]]'
+  );
+
+  useEffect(() => {
+    if (nextTS < apiCall.length) {
+      if (elapsed >= apiCall[nextTS][0]) {
+        setCurrentQuestion(apiCall[nextTS][1]);
+        setCurrentAnswer("");
+        setActualAnswer(apiCall[nextTS][2]);
+        setNextTS(nextTS + 1);
+      }
+    }
+  }, [elapsed]);
 
   const handleProgress = (state) => {
-    console.log("onProgress", state);
     setElapsed(state.playedSeconds);
+  };
+
+  const handleChange = (event) => {
+    setCurrentAnswer(event.target.value);
   };
 
   return (
@@ -43,19 +44,14 @@ export default function App() {
       <div className="left">
         <ReactPlayer
           url="https://www.youtube.com/watch?v=EQKATpGKyKM"
-          controls={true}
           onProgress={handleProgress}
+          controls={true}
         />
       </div>
       <div className="right">
-        <div className="right-questions">Questions</div>
+        <text className="right-questions">{currentQuestion}</text>
+        <input value={currentAnswer} onChange={handleChange} />
       </div>
     </div>
   );
 }
-
-const checkElapsedTime = (e) => {
-  const duration = e.target.getDuration();
-  const currentTime = e.target.getCurrentTime();
-  console.log(currentTime);
-};
