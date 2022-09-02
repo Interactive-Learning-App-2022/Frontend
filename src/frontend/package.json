@@ -53,6 +53,5 @@
     "vue-template-compiler": "^2.6.10",
     "vuera": "^0.2.6",
     "webpack-serve": "^3.2.0"
-    
   }
 }
