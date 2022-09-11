@@ -10,6 +10,7 @@
     "dist_win": "set WEBPACK_ENV=online&& node_modules/.bin/webpack -p"
   },
   "devDependencies": {
+    "@babel/preset-stage-2": "^7.8.3",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
     "babel-preset-env": "1.6.1",
@@ -38,10 +39,12 @@
     "popper.js": "^1.16.0",
     "prop-types": "15.6.0",
     "rc-pagination": "1.15.1",
-    "react": "16.2.0",
+    "react": "^18.2.0",
     "react-calendar": "^2.19.2",
-    "react-dom": "16.2.0",
+    "react-dom": "^18.2.0",
+    "react-player": "^2.10.1",
     "react-router-dom": "4.2.2",
+    "react-youtube": "^9.0.3",
     "reactstrap": "^8.1.1",
     "simditor": "2.3.6",
     "terser-webpack-plugin": "^2.2.1",
