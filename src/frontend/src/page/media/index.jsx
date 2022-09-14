@@ -7,6 +7,7 @@ const _mm = new MUtil();
 import React, { useEffect, useState } from "react";
 import "./index.scss";
 import ReactPlayer from "react-player/youtube";
+import { number } from "prop-types";
 // import { set } from "vue/types/umd";
 
 export default function App() {
@@ -34,6 +35,26 @@ export default function App() {
     });
   }, [elapsed]);
 
+  const split_list = currentQuestion.split("__");
+  console.log(split_list);
+  let i = 0;
+  const list = split_list.map((number) => {
+    i = i + 1;
+    if (number.length != 0 && i != split_list.length)
+      return (
+        <div style={{ whiteSpace: "pre-line" }}>
+          <text style={{ color: "white", fontSize: "larger" }}>{number}</text>
+          <input value={currentAnswer} onChange={handleChange} />
+        </div>
+      );
+    else
+      return (
+        <div>
+          <text style={{ color: "white", fontSize: "larger" }}>{number}</text>
+        </div>
+      );
+  });
+
   const handleProgress = (state) => {
     setElapsed(state.playedSeconds);
   };
@@ -52,9 +73,8 @@ export default function App() {
         />
       </div>
       <div className="right">
-        <text className="right-questions">{currentQuestion}</text>
-        {/* <text className="right-questions">{}</text> */}
-        <input value={currentAnswer} onChange={handleChange} />
+        {/* <div>Questions</div> */}
+        <div className="right-questions">{list}</div>
       </div>
     </div>
   );
