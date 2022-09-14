@@ -17,18 +17,21 @@ export default function App() {
   const [actualAnswer, setActualAnswer] = useState("");
 
   const apiCall = JSON.parse(
-    '[[184, "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", [3, 7, 4, 5]], [289, "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", [2, 6, 3, 8]]]'
+    '[{"start": 0, "end": 184, "type": "normal", "content": "", "next": 184}, {"start": 184, "end": 289, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 576, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"]}]'
   );
 
   useEffect(() => {
-    if (nextTS < apiCall.length) {
-      if (elapsed >= apiCall[nextTS][0]) {
-        setCurrentQuestion(apiCall[nextTS][1]);
+    apiCall.forEach((ts) => {
+      // console.log(ts["start"], ts["end"]);
+      if (ts["start"] <= elapsed && elapsed < ts["end"]) {
+        setCurrentQuestion(ts["content"]);
         setCurrentAnswer("");
-        setActualAnswer(apiCall[nextTS][2]);
-        setNextTS(nextTS + 1);
+
+        if ("answer" in ts) {
+          setActualAnswer(ts["answer"]);
+        }
       }
-    }
+    });
   }, [elapsed]);
 
   const handleProgress = (state) => {
@@ -50,6 +53,7 @@ export default function App() {
       </div>
       <div className="right">
         <text className="right-questions">{currentQuestion}</text>
+        {/* <text className="right-questions">{}</text> */}
         <input value={currentAnswer} onChange={handleChange} />
       </div>
     </div>
