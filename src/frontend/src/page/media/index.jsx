@@ -55,10 +55,11 @@ export default function App() {
     i = i+1;
     if (number.length != 0 && i != split_list.length)
     return(
-    <div style={{whiteSpace: "pre-line"}}>
+      //form here was div
+    <form style={{whiteSpace: "pre-line", display: "inline"}}>
     <text style={{color: "white", fontSize: "larger"}} >{number}</text>
     <input name={i.toString()} type="text" onChange={handleChange}/>
-    </div>
+    </form>
     )
     else
     return(<div><text style={{color: "white", fontSize: "larger"}}>{number}</text></div>)
