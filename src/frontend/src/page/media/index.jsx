@@ -12,18 +12,15 @@ import { number } from "prop-types";
 
 export default function App() {
   const [elapsed, setElapsed] = useState(0);
-  // const [nextTS, setNextTS] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState("");
   const [currentAnswer, setCurrentAnswer] = useState({});
   const [actualAnswer, setActualAnswer] = useState("");
-  // const ref = useRef(null);
   const apiCall = JSON.parse(
     '[{"start": 0, "end": 184, "type": "normal", "content": "", "next": 184}, {"start": 184, "end": 289, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 576, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"]}]'
   );
 
   useEffect(() => {
     apiCall.forEach((ts) => {
-      // console.log(ts["start"], ts["end"]);
       if (ts["start"] <= elapsed && elapsed < ts["end"]) {
         setCurrentQuestion(ts["content"]);
         setCurrentAnswer("");
@@ -37,11 +34,6 @@ export default function App() {
 
 
   const handleChange = useCallback((event) => {
-    // setCurrentAnswer(event.target.value)
-
-    // const value = event.target.value;
-    // console.log(event.target.name);
-    // var joined = myarray.concat(event.target.value);
     setCurrentAnswer(currentAnswer =>({
       ...currentAnswer,
       [event.target.name]:event.target.value,
@@ -55,22 +47,19 @@ export default function App() {
     i = i+1;
     if (number.length != 0 && i != split_list.length)
     return(
-    <div style={{whiteSpace: "pre-line"}}>
+    <form style={{whiteSpace: "pre-line", display: "inline"}}>
     <text style={{color: "white", fontSize: "larger"}} >{number}</text>
     <input name={i.toString()} type="text" onChange={handleChange}/>
-    </div>
+    </form>
     )
     else
-    return(<div><text style={{color: "white", fontSize: "larger"}}>{number}</text></div>)
+    return(<form style={{display: "inline"}}><text style={{color: "white", fontSize: "larger"}}>{number}</text></form>)
   }
   );
 
   const handleProgress = (state) => {
     setElapsed(state.playedSeconds);
   };
-
-
-  // const handleClick
 
   return (
     <div className="App">
@@ -82,9 +71,7 @@ export default function App() {
         />
       </div>
       <div className="right">
-        {/* <div>Questions</div> */}
-        <div className="right-questions">{list}</div>
-        {/* <button onClick={handleClick}>Submit</button> */}
+        <div className="right-questions">Questions<br></br>{list}</div>
       </div>
     </div>
   );
