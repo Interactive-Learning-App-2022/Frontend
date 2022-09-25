@@ -1,35 +1,4 @@
-// .color-box{
-//     display: block;
-//     height: 160px;
-//     text-align: center;
-//     padding: 20px 0;
-//     opacity: .9;
-//     transition: all .3s;
-//     &:hover{
-//         text-decoration: none;
-//         color: #555;
-//         opacity: 1;
-//         transform: scale(1.08);
-//     }
-//     &:focus{
-//         text-decoration: none;
-//     }
-//     .count{
-//         font-size: 50px;
-//         height: 80px;
-//         line-height: 80px;
-//     }
-//     .desc{
-//         font-size: 18px;
-//         .fa{
-//             margin-right: 5px;
-//         }
-//     }
-// }
 
-// body {
-//     background: #EEEEEE;
-//   }
  
 .App .right{
   background:rgb(35, 98, 166);
@@ -38,18 +7,12 @@
   background: white;
 }
 
-// #video{
-//   align-self: center;
-//   position: relative;
-//   aspect-ratio: 16/9;
-//   max-width: 80%;
-//   left: 10%;
-//   top: 10%
-// }
-
 input{
   width: 20%;
-  display: block;
+  margin-top: 10px;
+  border-radius: 10px;
+  border-color: black;
+  border-width: 2px;
 }
 
 @media screen and (min-width:1025px) and (max-width: 1600px) { 
@@ -88,6 +51,10 @@ input{
   align-items: center;
   justify-content: center;
 }
+  .App .right-questions{
+    margin: 10%;
+    color: rgb(255, 255, 255);
+  }
 
 }
 

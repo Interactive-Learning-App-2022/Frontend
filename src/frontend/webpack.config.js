@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { WebpackPluginServe: Serve } = require('webpack-plugin-serve');
 
+
 console.log(process.env.NODE_ENV); 
 module.exports = {
     mode: process.env.NODE_ENV,
@@ -49,7 +50,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env', 'react']
+                        presets: ['@babel/preset-env', 'react']
                     }
                 }
             },
