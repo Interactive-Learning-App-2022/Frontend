@@ -58,7 +58,7 @@ input{
 
 }
 
-@media screen and (min-width: 320px) and (max-width: 800px) {
+@media screen and (min-width: 600px) and (max-width: 800px) {
   .App{
     height: 100%;
     display: flex;
@@ -80,8 +80,56 @@ input{
       position: relative;
       aspect-ratio: 16/9;
       max-height: 30%;
-      // left: 10%;
-      // top: 10%;
+    }
+
+    .App .right-questions{
+      margin: 10%;
+      color: rgb(255, 255, 255);
     }
     
 }
+
+@media screen and (min-width: 320px) and (max-width: 600px) {
+  .App{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .App .div .left, 
+  .App .div .right{
+    width: 100%;
+    position: relative;
+    overflow: scroll;
+    height: 50%;
+  }
+  
+  .App .left{
+    flex: 1;
+    align-self: center;
+    position: relative;
+    aspect-ratio: 16/9;
+    max-height: 30%;
+    max-width: 100%;
+    contain: content;
+  }
+
+  .App .right{
+    flex: 1;
+  }
+
+  #video{
+      align-self: center;
+      position: relative;
+      aspect-ratio: 16/9;
+      max-height: 30%;
+      max-width: 100%;
+    }
+  
+    .App .right-questions{
+      margin: 10%;
+      color: rgb(255, 255, 255);
+    }
+    
+}
+
