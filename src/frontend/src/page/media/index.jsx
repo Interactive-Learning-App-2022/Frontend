@@ -12,13 +12,12 @@ import { number } from "prop-types";
 
 export default function App() {
   const [elapsed, setElapsed] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState("");
-  const [currentAnswer, setCurrentAnswer] = useState({});
-  const [currentEnd, setCurrentEnd] = useState();
+  const [currentTS, setCurrentTS] = useState();
+  const [currentContent, setCurrentContent] = useState(""); // split-screen content
+  const [currentAnswer, setCurrentAnswer] = useState({}); // userinput
   const [currentNext, setCurrentNext] = useState();
-  const [actualAnswer, setActualAnswer] = useState("");
   const [cont, setCont] = useState(false); // true - show continue button
-  const [check, setCheck] = useState(false);
+  const [check, setCheck] = useState(false); // true - show check button
   const [playing, setPlaying] = useState(true);
   const apiCall = JSON.parse(
     '[{"start": 0, "end": 184, "type": "normal", "content": "", "next": 184}, {"start": 184, "end": 289, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 576, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
@@ -26,24 +25,19 @@ export default function App() {
 
   // pauses the video at the end of segment, triggers the button
   useEffect(() => {
-    if (elapsed == currentEnd || elapsed > currentEnd) {
-      setPlaying(false);
-      setCheck(true);
-      console.log("stopped at", elapsed, "with end time", currentEnd);
+    if (currentTS) {
+      console.log("current end time", currentTS["end"]);
+      if (elapsed > currentTS["end"]) {
+        setPlaying(false);
+        setCheck(true);
+      }
     }
   }, [elapsed]);
 
   useEffect(() => {
     apiCall.forEach((ts) => {
       if (ts["start"] <= elapsed && elapsed < ts["end"]) {
-        setCurrentQuestion(ts["content"]);
-        setCurrentEnd(ts["end"]);
-        setCurrentAnswer("");
-        setCurrentNext(ts["next"]);
-
-        if ("answer" in ts) {
-          setActualAnswer(ts["answer"]);
-        }
+        setCurrentTS(ts);
       }
     });
   }, [elapsed]);
@@ -55,37 +49,50 @@ export default function App() {
     }));
   });
 
-  // when the
   const handleCheckClick = () => {
     alert("Great answers!");
+    if ("pass" in currentTS) {
+      setCurrentNext(currentTS["pass"]);
+    } else {
+      setCurrentNext(currentTS["next"]);
+    }
     setCont(true);
     setCheck(false);
   };
 
   const handleContClick = () => {
-    setElapsed(setCurrentNext);
+    setElapsed(currentNext);
     setPlaying(true);
     setCont(false);
   };
 
-  const split_list = currentQuestion.split("__");
-  let i = 0;
-  const list = split_list.map((number) => {
-    i = i + 1;
-    if (number.length != 0 && i != split_list.length)
-      return (
-        <form style={{ whiteSpace: "pre-line", display: "inline" }}>
-          <text style={{ color: "white", fontSize: "larger" }}>{number}</text>
-          <input name={i.toString()} type="text" onChange={handleChange} />
-        </form>
-      );
-    else
-      return (
-        <form style={{ display: "inline" }}>
-          <text style={{ color: "white", fontSize: "larger" }}>{number}</text>
-        </form>
-      );
-  });
+  useEffect(() => {
+    if (currentTS) {
+      const split_list = currentTS["content"].split("__");
+      let i = 0;
+      const list = split_list.map((number) => {
+        i = i + 1;
+        if (number.length != 0 && i != split_list.length)
+          return (
+            <form style={{ whiteSpace: "pre-line", display: "inline" }}>
+              <text style={{ color: "white", fontSize: "larger" }}>
+                {number}
+              </text>
+              <input name={i.toString()} type="text" onChange={handleChange} />
+            </form>
+          );
+        else
+          return (
+            <form style={{ display: "inline" }}>
+              <text style={{ color: "white", fontSize: "larger" }}>
+                {number}
+              </text>
+            </form>
+          );
+      });
+      setCurrentContent(list);
+    }
+  }, [currentTS]);
 
   const handleProgress = (state) => {
     setElapsed(state.playedSeconds);
@@ -104,7 +111,7 @@ export default function App() {
       <div className="right">
         <div className="right-questions">
           Questions<br></br>
-          {list}
+          {currentContent}
         </div>
         {check && (
           <button onClick={() => handleCheckClick()}>Check Answer</button>
