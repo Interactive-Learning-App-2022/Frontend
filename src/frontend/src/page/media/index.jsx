@@ -20,16 +20,20 @@ export default function App() {
   const [check, setCheck] = useState(false); // true - show check button
   const [playing, setPlaying] = useState(true);
   const apiCall = JSON.parse(
-    '[{"start": 0, "end": 184, "type": "normal", "content": "", "next": 184}, {"start": 184, "end": 289, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 576, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
+    '[{"start": 0, "end": 182, "type": "normal", "content": "", "next": 183}, {"start": 183, "end": 288, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 575, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
   );
+
+  const player = useRef(<ReactPlayer />);
 
   // pauses the video at the end of segment, triggers the button
   useEffect(() => {
     if (currentTS) {
-      console.log("current end time", currentTS["end"]);
-      if (elapsed > currentTS["end"]) {
+      if (elapsed >= currentTS["end"] && elapsed <= currentTS["end"] + 1) {
         setPlaying(false);
-        setCheck(true);
+        if (!cont) {
+          setCheck(true);
+        }
+        console.log("check", check, "at end of", currentTS["end"]);
       }
     }
   }, [elapsed]);
@@ -37,6 +41,12 @@ export default function App() {
   useEffect(() => {
     apiCall.forEach((ts) => {
       if (ts["start"] <= elapsed && elapsed < ts["end"]) {
+        if (currentTS) {
+          if (currentTS["end"] != ts["end"]) {
+            setCheck(false);
+          }
+        }
+
         setCurrentTS(ts);
       }
     });
@@ -61,7 +71,7 @@ export default function App() {
   };
 
   const handleContClick = () => {
-    setElapsed(currentNext);
+    player.current.seekTo(currentNext, "seconds");
     setPlaying(true);
     setCont(false);
   };
@@ -103,9 +113,16 @@ export default function App() {
       <div className="left">
         <ReactPlayer
           url="https://www.youtube.com/watch?v=EQKATpGKyKM"
+          ref={player}
           onProgress={handleProgress}
           controls={true}
           playing={playing}
+          onPlay={() => {
+            setPlaying(true);
+          }}
+          onPause={() => {
+            setPlaying(false);
+          }}
         />
       </div>
       <div className="right">
