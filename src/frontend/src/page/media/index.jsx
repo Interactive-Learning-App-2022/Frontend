@@ -75,9 +75,11 @@ export default function App() {
     }
     alert(string);
     if ("pass" in currentTS) {
-      setCurrentNext(currentTS["pass"]);
-    } else {
-      setCurrentNext(currentTS["next"]);
+      if (result) {
+        setCurrentNext(currentTS["pass"]);
+      } else {
+        setCurrentNext(currentTS["fail"]);
+      }
     }
     setCont(true);
     setCheck(false);
@@ -112,11 +114,7 @@ export default function App() {
   }
 
   useEffect(() => {
-    // setCurrentAnswer({});
     if (currentTS) {
-      // if (currentTS["answer"]) {
-      //   setActualAnswer(currentTS["answer"]);
-      // }
       const split_list = currentTS["content"].split("__");
       let i = 0;
       const list = split_list.map((number) => {
