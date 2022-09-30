@@ -15,14 +15,14 @@ export default function App() {
   const [currentTS, setCurrentTS] = useState();
   const [currentContent, setCurrentContent] = useState(""); // split-screen content
   const [currentAnswer, setCurrentAnswer] = useState({}); // userinput
-  const [currentNext, setCurrentNext] = useState();
+  const [currentNext, setCurrentNext] = useState(); // next timestamp
   const [cont, setCont] = useState(false); // true - show continue button
   const [check, setCheck] = useState(false); // true - show check button
   const [playing, setPlaying] = useState(true);
 
   // segment jumps work best when both the TS end and next TS start are not the same
   const apiCall = JSON.parse(
-    '[{"start": 0, "end": 182, "type": "normal", "content": "", "next": 183}, {"start": 183, "end": 288, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 575, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
+    '[{"start": 0, "end": 182, "type": "normal", "content": "", "next": 183}, {"start": 183, "end": 288, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289, "answer": ["3", "7", "4", "5"]}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 575, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
   );
 
   const player = useRef(null);
@@ -65,7 +65,15 @@ export default function App() {
   });
 
   const handleCheckClick = () => {
-    alert("Great answers!");
+    //if result is zero, at least one of the values are incorrect/blank
+    const [result, results] = evaluate();
+    var string = "";
+    var i = 0;
+    while (i < results.length) {
+      string = string + "\n" + (i + 1).toString() + ": " + results[i];
+      i = i + 1;
+    }
+    alert(string);
     if ("pass" in currentTS) {
       setCurrentNext(currentTS["pass"]);
     } else {
@@ -81,8 +89,34 @@ export default function App() {
     setCont(false);
   };
 
+  function evaluate() {
+    const len = currentTS["answer"].length;
+    var i = 0;
+    var incorrect = 1;
+    const results = [];
+    while (i < len) {
+      if (currentAnswer[(i + 1).toString()]) {
+        if (currentAnswer[(i + 1).toString()] === currentTS["answer"][i]) {
+          results.push("Correct 🙂");
+        } else {
+          results.push("Incorrect ☹️");
+          incorrect = 0;
+        }
+      } else {
+        results.push("Left blank ☹️");
+        incorrect = 0;
+      }
+      i = i + 1;
+    }
+    return [incorrect, results];
+  }
+
   useEffect(() => {
+    // setCurrentAnswer({});
     if (currentTS) {
+      // if (currentTS["answer"]) {
+      //   setActualAnswer(currentTS["answer"]);
+      // }
       const split_list = currentTS["content"].split("__");
       let i = 0;
       const list = split_list.map((number) => {
