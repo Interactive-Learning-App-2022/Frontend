@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@babel/core": "^7.19.1",
-    "babel-upgrade": "^1.0.1"
-  }
-}

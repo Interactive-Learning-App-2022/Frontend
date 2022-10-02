@@ -22,6 +22,7 @@ export default function App() {
   const [check, setCheck] = useState(false); // true - show check button
   const [playing, setPlaying] = useState(true);
   const [actualAnswer, setActualAnswer] = useState("");
+  const [volume, setVolume] = useState(); 
   const apiCall = JSON.parse(
     '[{"start": 0, "end": 184, "type": "normal", "content": "", "next": 184}, {"start": 184, "end": 289, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289, "answer": ["3", "7", "4", "5"]}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 576, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
   );
@@ -78,6 +79,13 @@ export default function App() {
     setCont(false);
   };
 
+  const handlePlaybutton = () => {
+    setPlaying(!playing); 
+  }
+
+  const handleVolume = e => {
+    setVolume(parseFloat(e.target.value)); 
+  }
   // function clear(){
   //   console.log("current", currentAnswer);
   //   const len = actualAnswer.length; 
@@ -175,6 +183,16 @@ export default function App() {
           <button onClick={() => handleCheckClick()}>Check Answer</button>
         )}
         {cont && <button onClick={() => handleContClick()}>continue</button>}
+      <div className="controls">
+        <button className="playbutton" onClick={handlePlaybutton}>
+          {playing ? <FontAwesomeIcon icon={faPause}/>: <FontAwesomeIcon icon={faPlay} />}
+          </button> 
+        <div className="volume-slider"> 
+        <FontAwesomeIcon icon={faVolumeLow}/> 
+        <input className="volumeslider"type="range" min={0} max={1} step="any" value={volume} onChange={handleVolume}/>
+        <FontAwesomeIcon icon={faVolumeHigh}/>
+        </div> 
+        </div>
       </div>
     </div>
   );
