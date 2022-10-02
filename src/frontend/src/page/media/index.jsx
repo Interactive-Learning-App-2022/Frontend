@@ -83,7 +83,7 @@ export default function App() {
     }
     setCont(true);
     setCheck(false);
-    clear();
+    // clear();
   };
 
   const handleContClick = () => {
@@ -114,22 +114,22 @@ export default function App() {
     return [incorrect, results];
   }
 
-  function clear(){
-    console.log("current", currentAnswer);
-    const len = actualAnswer.length; 
-    var i = 0;
-    while(i<len){
-      if(currentAnswer[(i+1).toString()]){
-        console.log("yes");
-        setCurrentAnswer((currentAnswer) => ({
-          ...currentAnswer,
-          [(i+1).toString()]: '',
-        }));
-      }
-      i = i+1;
-    }
-    console.log("after", currentAnswer);
-  }
+  // function clear(){
+  //   console.log("current", currentAnswer);
+  //   const len = actualAnswer.length; 
+  //   var i = 0;
+  //   while(i<len){
+  //     if(currentAnswer[(i+1).toString()]){
+  //       console.log("yes");
+  //       setCurrentAnswer((currentAnswer) => ({
+  //         ...currentAnswer,
+  //         [(i+1).toString()]: '',
+  //       }));
+  //     }
+  //     i = i+1;
+  //   }
+  //   console.log("after", currentAnswer);
+  // }
 
   useEffect(() => {
     if (currentTS) {
