@@ -170,27 +170,40 @@ export default function App() {
         <ReactPlayer
           url="https://www.youtube.com/watch?v=EQKATpGKyKM"
           onProgress={handleProgress}
-          controls={true}
+          controls={false}
           playing={playing}
+          volume={volume}
+          config={{
+            youtube: {
+              playerVars: {
+                modestbranding:1, 
+                rel:0
+              }
+            }
+          }}
         />
       </div>
-      <div className="right">
+      <div className="right"> 
+      {/* Change the divs if not looking right */}
+      <div className="wrapper">
         <div className="right-questions">
           Questions<br></br>
           {currentContent}
-        </div>
+        {/* </div> */}
         {check && (
           <button onClick={() => handleCheckClick()}>Check Answer</button>
         )}
         {cont && <button onClick={() => handleContClick()}>continue</button>}
+      </div> 
       <div className="controls">
         <button className="playbutton" onClick={handlePlaybutton}>
           {playing ? <FontAwesomeIcon icon={faPause}/>: <FontAwesomeIcon icon={faPlay} />}
           </button> 
         <div className="volume-slider"> 
-        <FontAwesomeIcon icon={faVolumeLow}/> 
+        <FontAwesomeIcon className="volumelow" icon={faVolumeLow}/> 
         <input className="volumeslider"type="range" min={0} max={1} step="any" value={volume} onChange={handleVolume}/>
-        <FontAwesomeIcon icon={faVolumeHigh}/>
+        <FontAwesomeIcon className="volumehigh" icon={faVolumeHigh}/>
+        </div> 
         </div> 
         </div>
       </div>
