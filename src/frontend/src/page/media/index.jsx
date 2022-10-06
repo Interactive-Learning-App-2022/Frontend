@@ -83,13 +83,15 @@ export default function App() {
     }
     setCont(true);
     setCheck(false);
-    // clear();
+
   };
 
   const handleContClick = () => {
     player.current.seekTo(currentNext, "seconds");
     setPlaying(true);
     setCont(false);
+    clear();
+    console.log("after", currentAnswer);
   };
 
   function evaluate() {
@@ -99,7 +101,9 @@ export default function App() {
     const results = [];
     while (i < len) {
       if (currentAnswer[(i + 1).toString()]) {
-        if (currentAnswer[(i + 1).toString()] === currentTS["answer"][i]) {
+        let temp = currentAnswer[(i + 1).toString()];
+        temp = temp.replace(/\s+/g, '');
+        if (temp === currentTS["answer"][i]) {
           results.push("Correct 🙂");
         } else {
           results.push("Incorrect ☹️");
@@ -114,21 +118,22 @@ export default function App() {
     return [incorrect, results];
   }
 
-  // function clear(){
-  //   console.log("current", currentAnswer);
-  //   const len = actualAnswer.length; 
-  //   var i = 0;
-  //   while(i<len){
-  //     if(currentAnswer[(i+1).toString()]){
-  //       console.log("yes");
-  //       setCurrentAnswer((currentAnswer) => ({
-  //         ...currentAnswer,
-  //         [(i+1).toString()]: '',
-  //       }));
-  //     }
-  //     i = i+1;
-  //   }
-  //   console.log("after", currentAnswer);
+  function clear(){
+    setCurrentAnswer({});
+    // console.log("current", currentAnswer);
+    // const len = actualAnswer.length; 
+    // var i = 0;
+    // while(i<len){
+    //   if(currentAnswer[(i+1).toString()]){
+    //     console.log("yes");
+    //     setCurrentAnswer((currentAnswer) => ({
+    //       ...currentAnswer,
+    //       [(i+1).toString()]: '',
+    //     }));
+    //   }
+    //   i = i+1;
+    }
+
   // }
 
   useEffect(() => {
