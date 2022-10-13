@@ -106,13 +106,13 @@ export default function App() {
         let temp = currentAnswer[(i + 1).toString()];
         temp = temp.replace(/\s+/g, '');
         if (temp === currentTS["answer"][i]) {
-          results.push("Correct 🙂");
+          results.push(currentAnswer[(i + 1).toString()] + " is Correct ✅");
         } else {
-          results.push("Incorrect ☹️");
+          results.push(currentAnswer[(i + 1).toString()] + " is incorrect ❎");
           incorrect = 0;
         }
       } else {
-        results.push("Left blank ☹️");
+        results.push("Left blank 🔵");
         incorrect = 0;
       }
       i = i + 1;
