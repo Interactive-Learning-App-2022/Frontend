@@ -74,7 +74,7 @@ export default function App() {
       i = i + 1;
     }
     alert(string);
-    if ("pass" in currentTS && currentTS["type" == "assess"]) {
+    if ("pass" in currentTS && currentTS["type"] == "assess") {
       if (result) {
         setCurrentNext(currentTS["pass"]);
       } else {
@@ -121,7 +121,6 @@ export default function App() {
   }
 
   function clear(){
-    // setCurrentAnswer({});
     var i = 1;
     const len = currentTS["answer"].length;
     while(i<=len){
@@ -132,7 +131,7 @@ export default function App() {
         }
         i = i+1;
     }
-
+    setCurrentAnswer({});
     }
 
 
