@@ -17,23 +17,29 @@ export default function App() {
   const [currentTS, setCurrentTS] = useState();
   const [currentContent, setCurrentContent] = useState(""); // split-screen content
   const [currentAnswer, setCurrentAnswer] = useState({}); // userinput
-  const [currentNext, setCurrentNext] = useState();
+  const [currentNext, setCurrentNext] = useState(); // next timestamp
   const [cont, setCont] = useState(false); // true - show continue button
   const [check, setCheck] = useState(false); // true - show check button
   const [playing, setPlaying] = useState(true);
   const [actualAnswer, setActualAnswer] = useState("");
   const [volume, setVolume] = useState(); 
   const apiCall = JSON.parse(
-    '[{"start": 0, "end": 184, "type": "normal", "content": "", "next": 184}, {"start": 184, "end": 289, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289, "answer": ["3", "7", "4", "5"]}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 576, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
+    '[{"start": 0, "end": 182, "type": "normal", "content": "", "next": 183}, {"start": 183, "end": 289, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 290, "answer": ["3", "7", "4", "5"]}, {"start": 290, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 575, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
   );
+
+  const player = useRef(null);
 
   // pauses the video at the end of segment, triggers the button
   useEffect(() => {
     if (currentTS) {
-      console.log("current end time", currentTS["end"]);
-      if (elapsed > currentTS["end"]) {
+      if (elapsed >= currentTS["end"] && elapsed <= currentTS["end"] + 1) {
         setPlaying(false);
-        setCheck(true);
+        if (!cont && currentTS["type"] != "normal") {
+          setCheck(true);
+        } else {
+          setCont(true);
+          setCurrentNext(currentTS["next"]);
+        }
       }
     }
   }, [elapsed]);
@@ -41,6 +47,13 @@ export default function App() {
   useEffect(() => {
     apiCall.forEach((ts) => {
       if (ts["start"] <= elapsed && elapsed < ts["end"]) {
+        if (currentTS) {
+          if (currentTS["end"] != ts["end"]) {
+            setCheck(false);
+            setCont(false);
+          }
+        }
+
         setCurrentTS(ts);
       }
     });
@@ -58,25 +71,31 @@ export default function App() {
     const [result, results] = evaluate();
     var string = "";
     var i = 0;
-    while(i<results.length){
-      string = string + "\n" + (i+1).toString() + ": " + results[i];
+    while (i < results.length) {
+      string = string + "\n" + (i + 1).toString() + ": " + results[i];
       i = i + 1;
     }
     alert(string);
-    if ("pass" in currentTS) {
-      setCurrentNext(currentTS["pass"]);
-    } else {
+    if ("pass" in currentTS && currentTS["type"] == "assess") {
+      if (result) {
+        setCurrentNext(currentTS["pass"]);
+      } else {
+        setCurrentNext(currentTS["fail"]);
+      }
+    }
+    else{
+      //for the walkthroughs
       setCurrentNext(currentTS["next"]);
     }
     setCont(true);
     setCheck(false);
-    // clear();
   };
 
   const handleContClick = () => {
-    setElapsed(currentNext);
+    player.current.seekTo(currentNext, "seconds");
     setPlaying(true);
     setCont(false);
+    clear();
   };
 
   const handlePlaybutton = () => {
@@ -108,32 +127,42 @@ export default function App() {
     var i = 0;
     var incorrect = 1;
     const results = [];
-    while(i<len){
-      if(currentAnswer[(i+1).toString()]){
-        if (currentAnswer[(i+1).toString()] === actualAnswer[i]){
-          results.push("Correct 🙂");
-        }
-        else{
-          results.push("Incorrect ☹️");
+    while (i < len) {
+      if (currentAnswer[(i + 1).toString()]) {
+        let temp = currentAnswer[(i + 1).toString()];
+        temp = temp.replace(/\s+/g, '');
+        if (temp === currentTS["answer"][i]) {
+          results.push(currentAnswer[(i + 1).toString()] + " is Correct ✅");
+        } else {
+          results.push(currentAnswer[(i + 1).toString()] + " is incorrect ❎");
           incorrect = 0;
         }
-      }
-      else{
-        results.push( "Left blank ☹️");
+      } else {
+        results.push("Left blank 🔵");
         incorrect = 0;
       }
-      i = i+1;
+      i = i + 1;
     }
     return [incorrect, results];
   }
 
+  function clear(){
+    var i = 1;
+    const len = currentTS["answer"].length;
+    while(i<=len){
+        if(currentAnswer[i.toString()]){
+          var elemt = document.getElementById(i.toString());
+          elemt.value = "";
+          console.log("yes");
+        }
+        i = i+1;
+    }
+    setCurrentAnswer({});
+    }
+
 
   useEffect(() => {
-    // setCurrentAnswer({});
     if (currentTS) {
-      if(currentTS["answer"]){
-        setActualAnswer(currentTS["answer"])
-      }
       const split_list = currentTS["content"].split("__");
       let i = 0;
       const list = split_list.map((number) => {
@@ -144,7 +173,7 @@ export default function App() {
               <text style={{ color: "white", fontSize: "larger" }}>
                 {number}
               </text>
-              <input name={i.toString()} type="text" onChange={handleChange} />
+              <input name={i.toString()} id={i.toString()} type="text" onChange={handleChange} />
             </form>
           );
         else
@@ -169,6 +198,7 @@ export default function App() {
       <div className="left">
         <ReactPlayer
           url="https://www.youtube.com/watch?v=EQKATpGKyKM"
+          ref={player}
           onProgress={handleProgress}
           controls={false}
           playing={playing}
@@ -191,7 +221,14 @@ export default function App() {
           {currentContent}
         {/* </div> */}
         {check && (
-          <button onClick={() => handleCheckClick()}>Check Answer</button>
+          <button className="videoButton" onClick={() => handleCheckClick()}>
+            Check Answer
+          </button>
+        )}
+        {cont && (
+          <button className="videoButton" onClick={() => handleContClick()}>
+            Continue
+          </button>
         )}
         {cont && <button onClick={() => handleContClick()}>continue</button>}
       </div> 
