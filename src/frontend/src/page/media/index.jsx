@@ -20,7 +20,7 @@ export default function App() {
   const [currentNext, setCurrentNext] = useState(); // next timestamp
   const [cont, setCont] = useState(false); // true - show continue button
   const [check, setCheck] = useState(false); // true - show check button
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [actualAnswer, setActualAnswer] = useState("");
   const [volume, setVolume] = useState(); 
   const apiCall = JSON.parse(
@@ -203,6 +203,7 @@ export default function App() {
           controls={false}
           playing={playing}
           volume={volume}
+          pip={false}
           config={{
             youtube: {
               playerVars: {
@@ -212,7 +213,17 @@ export default function App() {
             }
           }}
         />
+         <div className="controls">
+        <button className="playbutton" onClick={handlePlaybutton}>
+          {playing ? <FontAwesomeIcon icon={faPause}/>: <FontAwesomeIcon icon={faPlay} />}
+          </button> 
+        <div className="volume-slider"> 
+        <FontAwesomeIcon className="volumelow" icon={faVolumeLow}/> 
+        <input className="volumeslider"type="range" min={0} max={1} step="any" value={volume} onChange={handleVolume}/>
+        <FontAwesomeIcon className="volumehigh" icon={faVolumeHigh}/>
+        </div> 
       </div>
+      </div> 
       <div className="right"> 
       {/* Change the divs if not looking right */}
       <div className="wrapper">
@@ -231,19 +242,11 @@ export default function App() {
           </button>
         )}
         {cont && <button onClick={() => handleContClick()}>continue</button>}
-      </div> 
-      <div className="controls">
-        <button className="playbutton" onClick={handlePlaybutton}>
-          {playing ? <FontAwesomeIcon icon={faPause}/>: <FontAwesomeIcon icon={faPlay} />}
-          </button> 
-        <div className="volume-slider"> 
-        <FontAwesomeIcon className="volumelow" icon={faVolumeLow}/> 
-        <input className="volumeslider"type="range" min={0} max={1} step="any" value={volume} onChange={handleVolume}/>
-        <FontAwesomeIcon className="volumehigh" icon={faVolumeHigh}/>
-        </div> 
+      </div>
         </div> 
         </div>
       </div>
-    </div>
+       
+   
   );
 }

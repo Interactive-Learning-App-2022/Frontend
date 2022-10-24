@@ -9,12 +9,6 @@
 // .right-questions{
 //   float: left; 
 // }
-.controls{
-// float: left; 
-margin: 10%; 
-float: center; 
-clear: left; 
-}
 .playbutton{
   width:20%; 
 }
@@ -62,7 +56,61 @@ input{
   border-color: black;
   border-width: 2px;
 }
+@media screen and (min-width: 1025px){
+  .App {
+    padding-top: 70px;
+    padding-left: 260px;
+    display: flex;
+  }
 
+  #video {
+    align-self: center;
+    position: absolute;
+    aspect-ratio: 16/9;
+    max-width: 94%;
+    left: 3%;
+    right: 3%;
+    padding-top: 20px;
+  }
+  .controls{
+    position:relative; 
+    align-self: center; 
+    position: relative; 
+    padding: 10px; 
+    // display: flex; 
+    // bottom: 60px; 
+  }
+
+  .App .left {
+    width: 70%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
+    // flex-wrap: wrap; 
+    flex-direction: column; 
+  }
+  .App .right {
+    width: 30%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
+  }
+  .App .right-questions {
+    margin: 10%;
+    color: rgb(255, 255, 255);
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+  }
+}
 @media screen and (min-width: 1025px) and (max-width: 1600px) {
   .App {
     padding-top: 70px;
