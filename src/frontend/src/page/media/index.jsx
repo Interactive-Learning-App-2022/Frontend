@@ -19,6 +19,7 @@ export default function App() {
   const [cont, setCont] = useState(false); // true - show continue button
   const [check, setCheck] = useState(false); // true - show check button
   const [playing, setPlaying] = useState(true);
+  const [url, setUrl] = useState("https://www.youtube.com/watch?v=EQKATpGKyKM")
 
   // segment jumps work best when both the TS end and next TS start are not the same
   const apiCall = JSON.parse(
@@ -96,6 +97,13 @@ export default function App() {
     clear();
   };
 
+  const handleCourseClick = () => {
+    // <ReactPlayer {
+    // setCurrentUrl(videoUrl.current?.player?.player?.player?.currentSrc)
+    // }}
+    setUrl("https://www.youtube.com/watch?v=Vascnx8yk8o");
+  };
+
   function evaluate() {
     const len = currentTS["answer"].length;
     var i = 0;
@@ -104,6 +112,7 @@ export default function App() {
     while (i < len) {
       if (currentAnswer[(i + 1).toString()]) {
         let temp = currentAnswer[(i + 1).toString()];
+        //to ignore whitespaces from user input
         temp = temp.replace(/\s+/g, '');
         if (temp === currentTS["answer"][i]) {
           results.push(currentAnswer[(i + 1).toString()] + " is Correct ✅");
@@ -170,8 +179,9 @@ export default function App() {
   return (
     <div className="App">
       <div className="left">
+        <div className="video">
         <ReactPlayer
-          url="https://www.youtube.com/watch?v=EQKATpGKyKM"
+          url={url}
           ref={player}
           onProgress={handleProgress}
           controls={true}
@@ -183,6 +193,12 @@ export default function App() {
             setPlaying(false);
           }}
         />
+        </div>
+        <div className="courseButton">
+          <button onClick={() => handleCourseClick()}>
+            Change courses
+          </button>
+        </div>
       </div>
       <div className="right">
         <div className="right-questions">
