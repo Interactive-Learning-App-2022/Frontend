@@ -22,7 +22,7 @@ export default function App() {
   const [check, setCheck] = useState(false); // true - show check button
   const [actualAnswer, setActualAnswer] = useState("");
   const [volume, setVolume] = useState(); 
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [url, setUrl] = useState("https://www.youtube.com/watch?v=EQKATpGKyKM")
 
   // segment jumps work best when both the TS end and next TS start are not the same
