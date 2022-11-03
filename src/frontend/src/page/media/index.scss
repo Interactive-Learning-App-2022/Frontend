@@ -4,15 +4,113 @@
 .App .left {
   background: white;
 }
+//Within
+//<
+// .right-questions{
+//   float: left; 
+// }
+.playbutton{
+  width:20%; 
+}
+.volumeslider{
+  width:60%; 
+}
+.volumelow{
+  padding: 10px; 
+}
+.volumehigh{
+  padding:10px; 
+}
+// .playbutton{
+//   width: 40px; 
+//  position: relative; 
+//  right: -55px; 
 
-input {
+//  //  margin-left: 15px; 
+//  //  margin-top: 15px; 
+//  //  margin-right: 15px; 
+//  //  margin-bottom: 15px; 
+//   background-color: lightcyan; 
+//   align-self: center; 
+// }
+// .volumeslider{
+//  display: flex; 
+//  width: 150px; 
+//  padding: 25px; 
+//  padding-left: 10px; 
+//  padding-right: 10px; 
+// }
+// // .volumeLow{
+//  position: relative; 
+//  top: -20px; 
+// }
+// .volumeHigh{
+//  position: relative; 
+//  right: -120px; 
+//  top: -20px; 
+// }
+input{
   width: 20%;
   margin-top: 10px;
   border-radius: 10px;
   border-color: black;
   border-width: 2px;
 }
+@media screen and (min-width: 1025px){
+  .App {
+    padding-top: 70px;
+    padding-left: 260px;
+    display: flex;
+  }
 
+  #video {
+    align-self: center;
+    position: absolute;
+    aspect-ratio: 16/9;
+    max-width: 94%;
+    left: 3%;
+    right: 3%;
+    padding-top: 20px;
+  }
+  .controls{
+    position:relative; 
+    align-self: center; 
+    position: relative; 
+    padding: 10px; 
+    // display: flex; 
+    // bottom: 60px; 
+  }
+
+  .App .left {
+    width: 70%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
+    // flex-wrap: wrap; 
+    flex-direction: column; 
+  }
+  .App .right {
+    width: 30%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    overflow: scroll;
+    align-items: center;
+    justify-content: center;
+  }
+  .App .right-questions {
+    margin: 10%;
+    color: rgb(255, 255, 255);
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+  }
+}
 @media screen and (min-width: 1025px) and (max-width: 1600px) {
   .App {
     padding-top: 70px;

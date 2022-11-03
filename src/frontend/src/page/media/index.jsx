@@ -1,6 +1,8 @@
 //import { Link }     from 'react-router-dom';
 import MUtil from "util/mm.jsx";
 import { VueInReact } from "vuera";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ; 
+import {faVolumeHigh, faVolumeMute, faPause, faPlay, faVolumeLow} from '@fortawesome/free-solid-svg-icons' ; 
 
 const _mm = new MUtil();
 
@@ -184,15 +186,15 @@ export default function App() {
           url={url}
           ref={player}
           onProgress={handleProgress}
-          controls={true}
+          controls={false}
           playing={playing}
           onPlay={() => {
-            setPlaying(true);
+            setPlaying(false); 
           }}
           onPause={() => {
-            setPlaying(false);
+            setPlaying(false); 
           }}
-        />
+          />
         </div>
         <div className="courseButton">
           <button onClick={() => handleCourseClick()}>
@@ -200,11 +202,11 @@ export default function App() {
           </button>
         </div>
       </div>
-      <div className="right">
+      <div className="right"> 
         <div className="right-questions">
           Questions<br></br>
           {currentContent}
-        </div>
+          </div> 
         {check && (
           <button className="videoButton" onClick={() => handleCheckClick()}>
             Check Answer
@@ -215,7 +217,8 @@ export default function App() {
             Continue
           </button>
         )}
+        {cont && <button onClick={() => handleContClick()}>continue</button>}
       </div>
-    </div>
+        </div> 
   );
 }
