@@ -20,7 +20,6 @@ export default function App() {
   const [currentNext, setCurrentNext] = useState(); // next timestamp
   const [cont, setCont] = useState(false); // true - show continue button
   const [check, setCheck] = useState(false); // true - show check button
-  //const [playing, setPlaying] = useState(false);
   const [actualAnswer, setActualAnswer] = useState("");
   const [volume, setVolume] = useState(); 
   const [playing, setPlaying] = useState(true);
