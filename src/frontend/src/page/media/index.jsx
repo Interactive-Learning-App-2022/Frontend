@@ -19,10 +19,11 @@ export default function App() {
   const [cont, setCont] = useState(false); // true - show continue button
   const [check, setCheck] = useState(false); // true - show check button
   const [playing, setPlaying] = useState(true);
+  const [url, setUrl] = useState("https://www.youtube.com/watch?v=EQKATpGKyKM")
 
   // segment jumps work best when both the TS end and next TS start are not the same
   const apiCall = JSON.parse(
-    '[{"start": 0, "end": 182, "type": "normal", "content": "", "next": 183}, {"start": 183, "end": 288, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 289, "answer": ["3", "7", "4", "5"]}, {"start": 289, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 575, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
+    '[{"start": 0, "end": 182, "type": "normal", "content": "", "next": 183}, {"start": 183, "end": 289, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 290, "answer": ["3", "7", "4", "5"]}, {"start": 290, "end": 313, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 315, "fail": 405, "answer": ["2", "6", "3", "8"]}, {"start": 315, "end": 404, "type": "normal", "content": "", "next": 576}, {"start": 405, "end": 575, "type": "normal", "content": "", "next": 576}, {"start": 576, "end": 585, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 0, "fail": 0, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 184}]'
   );
 
   const player = useRef(null);
@@ -74,12 +75,16 @@ export default function App() {
       i = i + 1;
     }
     alert(string);
-    if ("pass" in currentTS) {
+    if ("pass" in currentTS && currentTS["type"] == "assess") {
       if (result) {
         setCurrentNext(currentTS["pass"]);
       } else {
         setCurrentNext(currentTS["fail"]);
       }
+    }
+    else{
+      //for the walkthroughs
+      setCurrentNext(currentTS["next"]);
     }
     setCont(true);
     setCheck(false);
@@ -89,6 +94,14 @@ export default function App() {
     player.current.seekTo(currentNext, "seconds");
     setPlaying(true);
     setCont(false);
+    clear();
+  };
+
+  const handleCourseClick = () => {
+    // <ReactPlayer {
+    // setCurrentUrl(videoUrl.current?.player?.player?.player?.currentSrc)
+    // }}
+    setUrl("https://www.youtube.com/watch?v=Vascnx8yk8o");
   };
 
   function evaluate() {
@@ -98,20 +111,38 @@ export default function App() {
     const results = [];
     while (i < len) {
       if (currentAnswer[(i + 1).toString()]) {
-        if (currentAnswer[(i + 1).toString()] === currentTS["answer"][i]) {
-          results.push("Correct 🙂");
+        let temp = currentAnswer[(i + 1).toString()];
+        //to ignore whitespaces from user input
+        temp = temp.replace(/\s+/g, '');
+        if (temp === currentTS["answer"][i]) {
+          results.push(currentAnswer[(i + 1).toString()] + " is Correct ✅");
         } else {
-          results.push("Incorrect ☹️");
+          results.push(currentAnswer[(i + 1).toString()] + " is incorrect ❎");
           incorrect = 0;
         }
       } else {
-        results.push("Left blank ☹️");
+        results.push("Left blank 🔵");
         incorrect = 0;
       }
       i = i + 1;
     }
     return [incorrect, results];
   }
+
+  function clear(){
+    var i = 1;
+    const len = currentTS["answer"].length;
+    while(i<=len){
+        if(currentAnswer[i.toString()]){
+          var elemt = document.getElementById(i.toString());
+          elemt.value = "";
+          console.log("yes");
+        }
+        i = i+1;
+    }
+    setCurrentAnswer({});
+    }
+
 
   useEffect(() => {
     if (currentTS) {
@@ -125,7 +156,7 @@ export default function App() {
               <text style={{ color: "white", fontSize: "larger" }}>
                 {number}
               </text>
-              <input name={i.toString()} type="text" onChange={handleChange} />
+              <input name={i.toString()} id={i.toString()} type="text" onChange={handleChange} />
             </form>
           );
         else
@@ -148,8 +179,9 @@ export default function App() {
   return (
     <div className="App">
       <div className="left">
+        <div className="video">
         <ReactPlayer
-          url="https://www.youtube.com/watch?v=EQKATpGKyKM"
+          url={url}
           ref={player}
           onProgress={handleProgress}
           controls={true}
@@ -161,6 +193,12 @@ export default function App() {
             setPlaying(false);
           }}
         />
+        </div>
+        <div className="courseButton">
+          <button onClick={() => handleCourseClick()}>
+            Change courses
+          </button>
+        </div>
       </div>
       <div className="right">
         <div className="right-questions">

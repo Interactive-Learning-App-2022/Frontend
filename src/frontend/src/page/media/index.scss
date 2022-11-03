@@ -20,15 +20,15 @@ input {
     display: flex;
   }
 
-  #video {
-    align-self: center;
-    position: relative;
-    aspect-ratio: 16/9;
-    max-width: 94%;
-    left: 3%;
-    right: 3%;
-    padding-top: 20px;
-  }
+  // #video {
+  //   align-self: center;
+  //   position: relative;
+  //   aspect-ratio: 16/9;
+  //   max-width: 94%;
+  //   left: 3%;
+  //   right: 3%;
+  //   padding-top: 20px;
+  // }
 
   .App .left {
     width: 70%;
@@ -38,6 +38,23 @@ input {
     overflow: scroll;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+  }
+
+  .App .left .video{
+    position: relative;
+    display: flex;
+    position: relative;
+    display: flex;
+    left: 0%;
+  }
+
+
+  .App .left .courseButton{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    top: 5%;
   }
   .App .right {
     width: 30%;
