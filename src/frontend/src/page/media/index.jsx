@@ -1,6 +1,8 @@
 //import { Link }     from 'react-router-dom';
 import MUtil from "util/mm.jsx";
 import { VueInReact } from "vuera";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ; 
+import {faVolumeHigh, faVolumeMute, faPause, faPlay, faVolumeLow} from '@fortawesome/free-solid-svg-icons' ; 
 
 const _mm = new MUtil();
 
@@ -18,7 +20,9 @@ export default function App() {
   const [currentNext, setCurrentNext] = useState(); // next timestamp
   const [cont, setCont] = useState(false); // true - show continue button
   const [check, setCheck] = useState(false); // true - show check button
-  const [playing, setPlaying] = useState(true);
+  const [actualAnswer, setActualAnswer] = useState("");
+  const [volume, setVolume] = useState(); 
+  const [playing, setPlaying] = useState(false);
   const [url, setUrl] = useState("https://www.youtube.com/watch?v=EQKATpGKyKM")
 
   // segment jumps work best when both the TS end and next TS start are not the same
@@ -96,6 +100,14 @@ export default function App() {
     setCont(false);
     clear();
   };
+
+  const handlePlaybutton = () => {
+    setPlaying(!playing); 
+  }
+
+  const handleVolume = e => {
+    setVolume(parseFloat(e.target.value)); 
+  }
 
   const handleCourseClick = () => {
     // <ReactPlayer {
@@ -184,27 +196,47 @@ export default function App() {
           url={url}
           ref={player}
           onProgress={handleProgress}
-          controls={true}
+          controls={false}
           playing={playing}
           onPlay={() => {
-            setPlaying(true);
+            setPlaying(true); 
           }}
           onPause={() => {
-            setPlaying(false);
+            setPlaying(false); 
+          }}
+          volume={volume}
+          pip={false}
+          config={{
+            youtube: {
+              playerVars: {
+                modestbranding:1, 
+                rel:0
+              }
+            }
           }}
         />
-        </div>
-        <div className="courseButton">
+        </div> 
+         <div className="controls">
+        <button className="playbutton" onClick={handlePlaybutton}>
+          {playing ? <FontAwesomeIcon icon={faPause}/>: <FontAwesomeIcon icon={faPlay} />}
+          </button> 
+        <div className="volume-slider"> 
+        <FontAwesomeIcon className="volumelow" icon={faVolumeLow}/> 
+        <input className="volumeslider"type="range" min={0} max={1} step="any" value={volume} onChange={handleVolume}/>
+        <FontAwesomeIcon className="volumehigh" icon={faVolumeHigh}/>
+      </div>
+      </div> 
+      <div className="courseButton">
           <button onClick={() => handleCourseClick()}>
             Change courses
           </button>
         </div>
-      </div>
-      <div className="right">
+        </div>  {/*End of left side */}
+      <div className="right"> 
         <div className="right-questions">
           Questions<br></br>
           {currentContent}
-        </div>
+          </div> 
         {check && (
           <button className="videoButton" onClick={() => handleCheckClick()}>
             Check Answer
@@ -216,6 +248,6 @@ export default function App() {
           </button>
         )}
       </div>
-    </div>
+        </div> 
   );
 }
