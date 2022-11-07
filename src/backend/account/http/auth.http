@@ -1,2 +1,0 @@
-GET http://127.0.0.1:8000/api/auth/user
-Authorization: Token cc4889a176b5e0fd5e817522316bf7b949ec7ee23f86dcfd44196dbb6b0aa84ab8d4ff4642f5f5d09cca75a40eb92cd7b8ef543a67f288790202d391c5b41cc7
