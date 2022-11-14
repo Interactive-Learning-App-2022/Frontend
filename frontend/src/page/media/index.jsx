@@ -226,11 +226,11 @@ export default function App() {
         <FontAwesomeIcon className="volumehigh" icon={faVolumeHigh}/>
       </div>
       </div> 
-      <div className="courseButton">
+      {/* <div className="courseButton">
           <button onClick={() => handleCourseClick()}>
             Change courses
           </button>
-        </div>
+        </div> */}
         </div>  {/*End of left side */}
       <div className="right"> 
         <div className="right-questions">
