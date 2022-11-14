@@ -85,7 +85,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/" render={(props) => LayoutRouter} />
+          <Route path="/" render={Media} />
         </Switch>
       </Router>
     );
