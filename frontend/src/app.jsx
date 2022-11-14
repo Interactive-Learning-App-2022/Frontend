@@ -35,7 +35,7 @@ class App extends React.Component {
     let LayoutRouter = (
       <Layout>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Media} />
           <Route exact path="/courses" component={Courses} />
           <Route exact path="/classroom/:classID" component={ClassDetail} />
           <Route
@@ -85,7 +85,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <Route path="/" render={Media} />
+          <Route path="/" render={(props) => LayoutRouter} />
         </Switch>
       </Router>
     );
