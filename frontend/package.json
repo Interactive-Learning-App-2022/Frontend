@@ -55,6 +55,7 @@
     "reactstrap": "^8.1.1",
     "simditor": "2.3.6",
     "terser-webpack-plugin": "^2.2.1",
+    "use-sound": "^4.0.1",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.10",

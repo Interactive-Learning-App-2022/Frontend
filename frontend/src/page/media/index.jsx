@@ -1,8 +1,14 @@
 //import { Link }     from 'react-router-dom';
 import MUtil from "util/mm.jsx";
 import { VueInReact } from "vuera";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' ; 
-import {faVolumeHigh, faVolumeMute, faPause, faPlay, faVolumeLow} from '@fortawesome/free-solid-svg-icons' ; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faVolumeHigh,
+  faVolumeMute,
+  faPause,
+  faPlay,
+  faVolumeLow,
+} from "@fortawesome/free-solid-svg-icons";
 
 const _mm = new MUtil();
 
@@ -11,6 +17,11 @@ import "./index.scss";
 import ReactPlayer from "react-player/youtube";
 import { number } from "prop-types";
 // import { set } from "vue/types/umd";
+
+// import useSound from "use-sound";
+import goodJobSfx from "../../resources/Goodjob.mp3";
+import definitionsSfx from "../../resources/Definitions.mp3";
+import needHelpSfx from "../../resources/Needhelp.mp3";
 
 export default function App() {
   const [elapsed, setElapsed] = useState(0);
@@ -21,10 +32,10 @@ export default function App() {
   const [cont, setCont] = useState(false); // true - show continue button
   const [check, setCheck] = useState(false); // true - show check button
   const [actualAnswer, setActualAnswer] = useState("");
-  const [volume, setVolume] = useState(); 
+  const [volume, setVolume] = useState();
   const [playing, setPlaying] = useState(false);
   const [finish, setFinish] = useState(false); //True - show finished button
-  const [finishbool, setFinishBool] = useState(false); 
+  const [finishbool, setFinishBool] = useState(false);
   // const [url, setUrl] = useState("https://www.youtube.com/watch?v=EQKATpGKyKM")
   //const [url, setUrl] = useState("http://www.youtube.com/watch?v=HjvuZ56Q9g")
   const [url, setUrl] = useState("https://youtu.be/HJzvuZ56Q9g");
@@ -36,6 +47,12 @@ export default function App() {
 
   const player = useRef(null);
 
+  // to play audio, use method .play()
+  // goodJob.play(), needHelp.play() ...
+  const goodJob = new Audio(goodJobSfx);
+  const needHelp = new Audio(needHelpSfx);
+  const definitions = new Audio(definitionsSfx);
+
   // pauses the video at the end of segment, triggers the button
   useEffect(() => {
     if (currentTS) {
@@ -44,14 +61,13 @@ export default function App() {
         if (!cont && currentTS["type"] != "normal") {
           setCheck(true);
         } else {
-          if (finishbool == true){ 
-            console.log("finishbool==true if statement"); 
-            //setCont(false); 
-            setFinish(true); 
-          }
-          else{
-          setCont(true);
-          setCurrentNext(currentTS["next"]);
+          if (finishbool == true) {
+            console.log("finishbool==true if statement");
+            //setCont(false);
+            setFinish(true);
+          } else {
+            setCont(true);
+            setCurrentNext(currentTS["next"]);
           }
         }
       }
@@ -93,16 +109,15 @@ export default function App() {
     if ("pass" in currentTS && currentTS["type"] == "assess") {
       if (result) {
         setCurrentNext(currentTS["pass"]);
-        if (currentTS["start"] == "598"){
-        console.log("Finish bool true"); 
-        setFinishBool(true); 
-        console.log(finishbool); 
+        if (currentTS["start"] == "598") {
+          console.log("Finish bool true");
+          setFinishBool(true);
+          console.log(finishbool);
         }
       } else {
         setCurrentNext(currentTS["fail"]);
       }
-    }
-    else{
+    } else {
       //for the walkthroughs
       setCurrentNext(currentTS["next"]);
     }
@@ -119,19 +134,19 @@ export default function App() {
 
   //Handles the end of the module
   const handleFinClick = () => {
-    console.log("working"); 
-    var string2 = "Good work! Let's move on to the next assessment. "
-    alert(string2); 
-    setFinish(false); 
-    setFinishBool(false); 
-    clear(); 
+    console.log("working");
+    var string2 = "Good work! Let's move on to the next assessment. ";
+    alert(string2);
+    setFinish(false);
+    setFinishBool(false);
+    clear();
   };
   const handlePlaybutton = () => {
-    setPlaying(!playing); 
+    setPlaying(!playing);
   };
 
-  const handleVolume = e => {
-    setVolume(parseFloat(e.target.value)); 
+  const handleVolume = (e) => {
+    setVolume(parseFloat(e.target.value));
   };
 
   const handleCourseClick = () => {
@@ -150,7 +165,7 @@ export default function App() {
       if (currentAnswer[(i + 1).toString()]) {
         let temp = currentAnswer[(i + 1).toString()];
         //to ignore whitespaces from user input
-        temp = temp.replace(/\s+/g, '');
+        temp = temp.replace(/\s+/g, "");
         if (temp == currentTS["answer"][i]) {
           results.push(currentAnswer[(i + 1).toString()] + " is Correct ✅");
         } else {
@@ -166,20 +181,19 @@ export default function App() {
     return [incorrect, results];
   }
 
-  function clear(){
+  function clear() {
     var i = 1;
     const len = currentTS["answer"].length;
-    while(i<=len){
-        if(currentAnswer[i.toString()]){
-          var elemt = document.getElementById(i.toString());
-          elemt.value = "";
-          console.log("yes");
-        }
-        i = i+1;
+    while (i <= len) {
+      if (currentAnswer[i.toString()]) {
+        var elemt = document.getElementById(i.toString());
+        elemt.value = "";
+        console.log("yes");
+      }
+      i = i + 1;
     }
     setCurrentAnswer({});
-    }
-
+  }
 
   useEffect(() => {
     if (currentTS) {
@@ -193,7 +207,12 @@ export default function App() {
               <text style={{ color: "white", fontSize: "larger" }}>
                 {number}
               </text>
-              <input name={i.toString()} id={i.toString()} type="text" onChange={handleChange} />
+              <input
+                name={i.toString()}
+                id={i.toString()}
+                type="text"
+                onChange={handleChange}
+              />
             </form>
           );
         else
@@ -217,51 +236,62 @@ export default function App() {
     <div className="App">
       <div className="left">
         <div className="video">
-        <ReactPlayer
-          url={url}
-          ref={player}
-          onProgress={handleProgress}
-          controls={false}
-          playing={playing}
-          onPlay={() => {
-            setPlaying(true); 
-          }}
-          onPause={() => {
-            setPlaying(false); 
-          }}
-          volume={volume}
-          pip={false}
-          config={{
-            youtube: {
-              playerVars: {
-                modestbranding:1, 
-                rel:0
-              }
-            }
-          }}
-        />
-        </div> 
-         <div className="controls">
-        <button className="playbutton" onClick={handlePlaybutton}>
-          {playing ? <FontAwesomeIcon icon={faPause}/>: <FontAwesomeIcon icon={faPlay} />}
-          </button> 
-        <div className="volume-slider"> 
-        <FontAwesomeIcon className="volumelow" icon={faVolumeLow}/> 
-        <input className="volumeslider"type="range" min={0} max={1} step="any" value={volume} onChange={handleVolume}/>
-        <FontAwesomeIcon className="volumehigh" icon={faVolumeHigh}/>
-      </div>
-      </div> 
-      <div className="courseButton">
-          <button onClick={() => handleCourseClick()}>
-            Change courses
-          </button>
+          <ReactPlayer
+            url={url}
+            ref={player}
+            onProgress={handleProgress}
+            controls={false}
+            playing={playing}
+            onPlay={() => {
+              setPlaying(true);
+            }}
+            onPause={() => {
+              setPlaying(false);
+            }}
+            volume={volume}
+            pip={false}
+            config={{
+              youtube: {
+                playerVars: {
+                  modestbranding: 1,
+                  rel: 0,
+                },
+              },
+            }}
+          />
         </div>
-        </div>  {/*End of left side */}
-      <div className="right"> 
+        <div className="controls">
+          <button className="playbutton" onClick={handlePlaybutton}>
+            {playing ? (
+              <FontAwesomeIcon icon={faPause} />
+            ) : (
+              <FontAwesomeIcon icon={faPlay} />
+            )}
+          </button>
+          <div className="volume-slider">
+            <FontAwesomeIcon className="volumelow" icon={faVolumeLow} />
+            <input
+              className="volumeslider"
+              type="range"
+              min={0}
+              max={1}
+              step="any"
+              value={volume}
+              onChange={handleVolume}
+            />
+            <FontAwesomeIcon className="volumehigh" icon={faVolumeHigh} />
+          </div>
+        </div>
+        <div className="courseButton">
+          <button onClick={() => handleCourseClick()}>Change courses</button>
+        </div>
+      </div>{" "}
+      {/*End of left side */}
+      <div className="right">
         <div className="right-questions">
           Questions<br></br>
           {currentContent}
-          </div> 
+        </div>
         {check && (
           <button className="videoButton" onClick={() => handleCheckClick()}>
             Check Answer
@@ -278,6 +308,6 @@ export default function App() {
           </button>
         )}
       </div>
-        </div> 
+    </div>
   );
 }
