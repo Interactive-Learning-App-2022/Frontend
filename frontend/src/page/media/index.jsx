@@ -73,6 +73,7 @@ export default function App() {
     });
   }, [elapsed]);
 
+  //taking user input boxes
   const handleChange = useCallback((event) => {
     setCurrentAnswer((currentAnswer) => ({
       ...currentAnswer,
@@ -134,11 +135,14 @@ export default function App() {
     setVolume(parseFloat(e.target.value)); 
   };
 
+    //switch videos 
   const handleCourseClick = () => {
-    // <ReactPlayer {
-    // setCurrentUrl(videoUrl.current?.player?.player?.player?.currentSrc)
-    // }}
-    setUrl("https://www.youtube.com/watch?v=Vascnx8yk8o");
+    if (url == "https://www.youtube.com/watch?v=EQKATpGKyKM"){
+      setUrl("https://www.youtube.com/watch?v=Vascnx8yk8o");
+    }
+    else{
+      setUrl("https://www.youtube.com/watch?v=EQKATpGKyKM");
+    }
   };
 
   function evaluate() {
