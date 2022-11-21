@@ -184,6 +184,9 @@ class TargetDetail extends React.Component {
                     <button type="button" class="btn btn-primary btn-lg" style={{ marginTop: "20px", backgroundColor: "#02D0FF" }}>
                         <span onClick={() => this.props.history.goBack()}>Back</span>
                     </button>
+                    <Link to="/Video">
+                    <button>Math Learning Module</button>
+                    </Link>
                 </div>;
 
         } else {
@@ -262,6 +265,9 @@ class TargetDetail extends React.Component {
 
 
                     </div>
+                    <Link to="/Video">
+                    <button>Math Learning Module</button>
+                    </Link>
                     <button type="button" class="btn btn-primary btn-lg" style={{ marginTop: "100px", backgroundColor: "#02D0FF" }}>
                         <span onClick={() => this.props.history.goBack()}>Back</span>
                     </button>
