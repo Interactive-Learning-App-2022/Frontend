@@ -247,7 +247,7 @@ export default function App() {
             url={url}
             ref={player}
             onProgress={handleProgress}
-            controls={false}
+            controls={true}
             playing={playing}
             onPlay={() => {
               setPlaying(true);
