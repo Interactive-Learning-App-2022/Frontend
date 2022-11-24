@@ -18,7 +18,7 @@ import ReactPlayer from "react-player/youtube";
 import { number } from "prop-types";
 // import { set } from "vue/types/umd";
 
-// import useSound from "use-sound";
+import useSound from "use-sound";
 import goodJobSfx from "../../resources/Goodjob.mp3";
 import definitionsSfx from "../../resources/Definitions.mp3";
 import needHelpSfx from "../../resources/Needhelp.mp3";
@@ -42,11 +42,10 @@ export default function App() {
   const [url, setUrl] = useState("https://youtu.be/HJzvuZ56Q9g");
   const[course, setCourse] = useState("Math");
   const[apiCall, setapiCall] = useState(JSON.parse(
-    '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
+    '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "assess", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "pass":297, "fail": 187, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 417, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
   ));
 
   // segment jumps work best when both the TS end and next TS start are not the same
-<<<<<<< HEAD
   // const apiCall = JSON.parse(
   //   '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
   // );
@@ -55,11 +54,6 @@ export default function App() {
   //   '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
   // );
   
-=======
-  const apiCall = JSON.parse(
-    '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "assess", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "pass":297, "fail": 187, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 417, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
-  );
->>>>>>> origin/main
 
   const player = useRef(null);
 
@@ -77,7 +71,6 @@ export default function App() {
         if (!cont && currentTS["type"] != "normal") {
           setCheck(true);
         } else {
-<<<<<<< HEAD
           if (finishbool == true){ 
             console.log("finishbool==true if statement"); 
             //setCont(false); 
@@ -89,7 +82,6 @@ export default function App() {
           else{
           setCont(true);
           setCurrentNext(currentTS["next"]);
-=======
           if (finishbool == true) {
             console.log("finishbool==true if statement");
             //setCont(false);
@@ -97,11 +89,11 @@ export default function App() {
           } else {
             setCont(true);
             setCurrentNext(currentTS["next"]);
->>>>>>> origin/main
           }
         }
       }
     }
+  }
   }, [elapsed]);
 
   useEffect(() => {
@@ -140,20 +132,11 @@ export default function App() {
     if ("pass" in currentTS && currentTS["type"] == "assess") {
       if (result) {
         setCurrentNext(currentTS["pass"]);
-<<<<<<< HEAD
-        //keerthan's
-        if (currentTS["start"] == "598" && course == "Math"){
-        console.log("Finish bool true"); 
-        setFinishBool(true); 
-        console.log(finishbool); 
-        //
-=======
         //Put in the start fin
         if (currentTS["start"] == "598" && subject=="Math") {
           console.log("Finish bool true");
           setFinishBool(true);
           console.log(finishbool);
->>>>>>> origin/main
         }
       } else {
         if(course== "English" && currentTS["tried"]==0){
@@ -167,7 +150,8 @@ export default function App() {
           setCurrentNext(currentTS["fail"]);
         }
       }
-    } else {
+    }
+    else{
       //for the walkthroughs
       setCurrentNext(currentTS["next"]);
     }
@@ -202,7 +186,6 @@ export default function App() {
 
   //switch videos
   const handleCourseClick = () => {
-<<<<<<< HEAD
     if (url == "https://youtu.be/HJzvuZ56Q9g"){
       setUrl("https://www.youtube.com/watch?v=Vascnx8yk8o");
       setCourse("English");
@@ -226,27 +209,8 @@ export default function App() {
         '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, \
         {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
       ));
-=======
-    if (url == "https://www.youtube.com/watch?v=EQKATpGKyKM" || url == "https://youtu.be/HJzvuZ56Q9g") {
-      setUrl("https://www.youtube.com/watch?v=Vascnx8yk8o");
-      setSubject("English"); 
-    } else {
-      setUrl("https://www.youtube.com/watch?v=EQKATpGKyKM");
-      setSubject("Math"); 
->>>>>>> origin/main
     }
   };
-
-  //jump to when she says "I want you to look at the definitions next to me and
-  //pick the one that you think is the correct one."
-  function definition(){
-    player.current.seekTo("569", "seconds");
-    setPlaying(true);
-    if(elapsed == "575"){
-      setCont(true);
-      setCurrentNext(currentTS["start"]);
-    }
-  }
 
   function evaluate() {
     const len = currentTS["answer"].length;
@@ -276,16 +240,17 @@ export default function App() {
   function clear() {
     var i = 1;
     const len = currentTS["answer"].length;
-    while (i <= len) {
-      if (currentAnswer[i.toString()]) {
-        var elemt = document.getElementById(i.toString());
-        elemt.value = "";
-        console.log("yes");
-      }
-      i = i + 1;
+    while(i<=len){
+        if(currentAnswer[i.toString()]){
+          var elemt = document.getElementById(i.toString());
+          elemt.value = "";
+          console.log("yes");
+        }
+        i = i+1;
     }
     setCurrentAnswer({});
   }
+
 
   useEffect(() => {
     if (currentTS) {
@@ -328,47 +293,6 @@ export default function App() {
     <div className="App">
       <div className="left">
         <div className="video">
-<<<<<<< HEAD
-        <ReactPlayer
-          url={url}
-          ref={player}
-          onProgress={handleProgress}
-          // controls={false}
-          controls={true}
-          playing={playing}
-          onPlay={() => {
-            setPlaying(true); 
-          }}
-          onPause={() => {
-            setPlaying(false); 
-          }}
-          volume={volume}
-          pip={false}
-          config={{
-            youtube: {
-              playerVars: {
-                modestbranding:1, 
-                rel:0
-              }
-            }
-          }}
-        />
-        </div> 
-         <div className="controls">
-        <button className="playbutton" onClick={handlePlaybutton}>
-          {playing ? <FontAwesomeIcon icon={faPause}/>: <FontAwesomeIcon icon={faPlay} />}
-          </button> 
-        <div className="volume-slider"> 
-        <FontAwesomeIcon className="volumelow" icon={faVolumeLow}/> 
-        <input className="volumeslider"type="range" min={0} max={1} step="any" value={volume} onChange={handleVolume}/>
-        <FontAwesomeIcon className="volumehigh" icon={faVolumeHigh}/>
-      </div>
-      </div> 
-      <div className="courseButton">
-          <button onClick={() => handleCourseClick()}>
-            Change courses
-          </button>
-=======
           <ReactPlayer
             url={url}
             ref={player}
@@ -393,7 +317,6 @@ export default function App() {
               },
             }}
           />
->>>>>>> origin/main
         </div>
         <div className="controls">
           <button className="playbutton" onClick={handlePlaybutton}>
