@@ -28,11 +28,20 @@ export default function App() {
   // const [url, setUrl] = useState("https://www.youtube.com/watch?v=EQKATpGKyKM")
   //const [url, setUrl] = useState("http://www.youtube.com/watch?v=HjvuZ56Q9g")
   const [url, setUrl] = useState("https://youtu.be/HJzvuZ56Q9g");
+  const[course, setCourse] = useState("Math");
+  const[apiCall, setapiCall] = useState(JSON.parse(
+    '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
+  ));
 
   // segment jumps work best when both the TS end and next TS start are not the same
-  const apiCall = JSON.parse(
-    '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
-  );
+  // const apiCall = JSON.parse(
+  //   '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
+  // );
+
+  // const apiCall = JSON.parse(
+  //   '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
+  // );
+  
 
   const player = useRef(null);
 
@@ -49,6 +58,9 @@ export default function App() {
             //setCont(false); 
             setFinish(true); 
           }
+          // else if(currentTS["type"] != "assess" && course == "English"){
+          //   definition();
+          // }
           else{
           setCont(true);
           setCurrentNext(currentTS["next"]);
@@ -94,13 +106,24 @@ export default function App() {
     if ("pass" in currentTS && currentTS["type"] == "assess") {
       if (result) {
         setCurrentNext(currentTS["pass"]);
-        if (currentTS["start"] == "598"){
+        //keerthan's
+        if (currentTS["start"] == "598" && course == "Math"){
         console.log("Finish bool true"); 
         setFinishBool(true); 
         console.log(finishbool); 
+        //
         }
       } else {
+        if(course== "English" && currentTS["tried"]==0){
         setCurrentNext(currentTS["fail"]);
+        currentTS["tried"] = 1;
+        }
+        else if (course == "English" && currentTS["tried"]==1){
+          setCurrentNext(currentTS["pass"]);
+        }
+        else{
+          setCurrentNext(currentTS["fail"]);
+        }
       }
     }
     else{
@@ -116,6 +139,7 @@ export default function App() {
     setPlaying(true);
     setCont(false);
     clear();
+    
   };
 
   //Handles the end of the module
@@ -137,13 +161,42 @@ export default function App() {
 
     //switch videos 
   const handleCourseClick = () => {
-    if (url == "https://www.youtube.com/watch?v=EQKATpGKyKM"){
+    if (url == "https://youtu.be/HJzvuZ56Q9g"){
       setUrl("https://www.youtube.com/watch?v=Vascnx8yk8o");
+      setCourse("English");
+      setapiCall(JSON.parse(
+          '[{"start": 0, "end": 221, "type": "normal", "content": "", "next": 222}, {"tried": 0, "start": 222, "end": 223, "type": "assess", "content": "A) Very small and weak\\nB)Never amount to anything\\nC)To do away with\\n__", "pass": 225, "fail": 146, "answer": ["A"]}, \
+          {"start": 225, "end": 302, "type": "normal", "content": "", "next": 303}, {"tried": 0, "start": 303, "end": 304, "type": "assess", "content": "A) Different\\nB)Unfair\\nC)Hanging on\\n__", "pass": 306, "fail": 285, "answer": ["B"]}, \
+          {"start": 306, "end": 409, "type": "normal", "content": "", "next": 410 }, {"tried": 0, "start": 410, "end": 411, "type": "assess", "content": "A) Distribute\\nB)Injustice\\nC)Early or quickly\\n__", "pass": 412, "fail": 345, "answer": ["C"]}, \
+          {"start": 412, "end": 491, "type": "normal", "content": "", "next": 492 }, {"tried": 0, "start": 492, "end": 493, "type": "assess", "content": "A) Waited\\nB)Disappeared\\nC)Stand and watch\\n__", "pass": 494, "fail": 460, "answer": ["B"]}, \
+          {"start": 494, "end": 577, "type": "normal", "content": "", "next": 578 }, {"tried": 0, "start": 578, "end": 579, "type": "assess", "content": "A) Pen\\nB)Type of goose\\nC)Chair\\n__", "pass": 580, "fail": 560, "answer": ["C"]}, \
+          {"start": 580, "end": 677, "type": "normal", "content": "", "next": 678 }, {"tried": 0, "start": 678, "end": 678, "type": "assess", "content": "A) Pushed through\\nB)Standing\\nC)Walking\\n__", "pass": 679, "fail": 625, "answer": ["A"]}, \
+          {"start": 679, "end": 756, "type": "normal", "content": "", "next": 757 }, {"tried": 0, "start": 757, "end": 759, "type": "assess", "content": "A) Smelly\\nB)Yummy\\nC)Ugly\\n__", "pass": 764, "fail": 724, "answer": ["B"]}\
+          ]'
+        ));
     }
+    // {"start": 758, "end": 760, "type": "normal", "content": ""}\
+
     else{
-      setUrl("https://www.youtube.com/watch?v=EQKATpGKyKM");
+      setUrl("https://youtu.be/HJzvuZ56Q9g");
+      setCourse("Math");
+      setapiCall(JSON.parse(
+        '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, \
+        {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
+      ));
     }
   };
+
+  //jump to when she says "I want you to look at the definitions next to me and
+  //pick the one that you think is the correct one."
+  function definition(){
+    player.current.seekTo("569", "seconds");
+    setPlaying(true);
+    if(elapsed == "575"){
+      setCont(true);
+      setCurrentNext(currentTS["start"]);
+    }
+  }
 
   function evaluate() {
     const len = currentTS["answer"].length;
@@ -225,7 +278,8 @@ export default function App() {
           url={url}
           ref={player}
           onProgress={handleProgress}
-          controls={false}
+          // controls={false}
+          controls={true}
           playing={playing}
           onPlay={() => {
             setPlaying(true); 
