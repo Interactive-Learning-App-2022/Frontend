@@ -9,6 +9,7 @@ import {
   faPause,
   faPlay,
   faVolumeLow,
+  faL,
 } from "@fortawesome/free-solid-svg-icons";
 
 
@@ -146,11 +147,17 @@ export default function App() {
   };
 
   const handleContClick = () => {
+    //to say "Now pick the best definitions next to me" in the english video
+    if(subject == "English"){
+    if(currentTS["type"] == "normal"){
+      definitions.play();
+      setPlaying(false);
+    }
+  }
     player.current.seekTo(currentNext, "seconds");
     setPlaying(true);
     setCont(false);
     clear();
-    // definitions.play();
   };
 
   //Handles the end of the module
@@ -176,13 +183,14 @@ export default function App() {
       setUrl("https://youtu.be/Kd1WOEqiOnQ");
       setSubject("English"); 
       setapiCall(JSON.parse(
-          '[{"start": 0, "end": 223, "type": "normal", "content": "", "next": 224}, {"tried": 0, "start": 224, "end": 226, "type": "assess", "content": "A) Very small and weak\\nB)Never amount to anything\\nC)To do away with\\n__", "pass": 227, "fail": 146, "answer": ["A"]}, \
-          {"start": 227, "end": 302, "type": "normal", "content": "", "next": 303}, {"tried": 0, "start": 303, "end": 304, "type": "assess", "content": "A) Different\\nB)Unfair\\nC)Hanging on\\n__", "pass": 306, "fail": 285, "answer": ["B"]}, \
-          {"start": 306, "end": 409, "type": "normal", "content": "", "next": 410 }, {"tried": 0, "start": 410, "end": 411, "type": "assess", "content": "A) Distribute\\nB)Injustice\\nC)Early or quickly\\n__", "pass": 412, "fail": 345, "answer": ["C"]}, \
-          {"start": 412, "end": 491, "type": "normal", "content": "", "next": 492 }, {"tried": 0, "start": 492, "end": 493, "type": "assess", "content": "A) Waited\\nB)Disappeared\\nC)Stand and watch\\n__", "pass": 494, "fail": 460, "answer": ["B"]}, \
-          {"start": 494, "end": 577, "type": "normal", "content": "", "next": 578 }, {"tried": 0, "start": 578, "end": 579, "type": "assess", "content": "A) Pen\\nB)Type of goose\\nC)Chair\\n__", "pass": 580, "fail": 560, "answer": ["C"]}, \
-          {"start": 580, "end": 677, "type": "normal", "content": "", "next": 678 }, {"tried": 0, "start": 678, "end": 678, "type": "assess", "content": "A) Pushed through\\nB)Standing\\nC)Walking\\n__", "pass": 679, "fail": 625, "answer": ["A"]}, \
-          {"start": 679, "end": 756, "type": "normal", "content": "", "next": 757 }, {"tried": 0, "start": 757, "end": 759, "type": "assess", "content": "A) Smelly\\nB)Yummy\\nC)Ugly\\n__", "pass": 764, "fail": 724, "answer": ["B"]}\
+          '[{"start": 0, "end": 223, "type": "normal", "content": "", "next": 224}, {"tried": 0, "start": 224, "end": 226, "type": "assess", "content": "Which of the following definitions describes the word runt?\\nA) Very small and weak\\nB)Never amount to anything\\nC)To do away with\\n\\nType either A, B or C\\n__", "pass": 227, "fail": 146, "answer": ["A"]}, \
+          {"start": 227, "end": 304, "type": "normal", "content": "", "next": 305}, {"tried": 0, "start": 305, "end": 307, "type": "assess", "content": "Which of the following definitions describes the word injustice?\\nA) Different\\nB)Unfair\\nC)Hanging on\\n\\nType either A, B or C\\n__", "pass": 308, "fail": 285, "answer": ["B"]}, \
+          {"start": 308, "end": 409, "type": "normal", "content": "", "next": 410 }, {"tried": 0, "start": 410, "end": 411, "type": "assess", "content": "Which of the following definitions describes the word promptly?\\nA) Distribute\\nB)Injustice\\nC)Early or quickly\\n\\nType either A, B or C\\n__", "pass": 412, "fail": 345, "answer": ["C"]}, \
+          {"start": 412, "end": 491, "type": "normal", "content": "", "next": 492 }, {"tried": 0, "start": 492, "end": 493, "type": "assess", "content": "Which of the following definitions describes the word vanished?\\nA) Waited\\nB)Disappeared\\nC)Stand and watch\\n\\nType either A, B or C\\n__", "pass": 494, "fail": 460, "answer": ["B"]}, \
+          {"start": 494, "end": 589, "type": "normal", "content": "", "next": 590 }, {"tried": 0, "start": 590, "end": 592, "type": "assess", "content": "Which of the following definitions describes the word stool?\\nA) Pen\\nB)Type of goose\\nC)Chair\\n\\nType either A, B or C\\n__", "pass": 593, "fail": 560, "answer": ["C"]}, \
+          {"start": 593, "end": 705, "type": "normal", "content": "", "next": 706 }, {"tried": 0, "start": 706, "end": 707, "type": "assess", "content": "Which of the following definitions describes the word squeezed?\\nA) Pushed through\\nB)Standing\\nC)Walking\\n\\nType either A, B or C\\n__", "pass": 708, "fail": 625, "answer": ["A"]}, \
+          {"start": 708, "end": 783, "type": "normal", "content": "", "next": 784 }, {"tried": 0, "start": 784, "end": 785, "type": "assess", "content": "Which of the following definitions describes the word appetizing?\\nA) Smelly\\nB)Yummy\\nC)Ugly\\n\\nType either A, B or C\\n__", "pass": 791, "fail": 724, "answer": ["B"]}, \
+          {"start": 791, "end": 793, "type": "normal", "content": ""}\
           ]'
         ));
     } else {
@@ -205,7 +213,7 @@ export default function App() {
         let temp = currentAnswer[(i + 1).toString()];
         //to ignore whitespaces from user input
         temp = temp.replace(/\s+/g, "");
-        if (temp == currentTS["answer"][i]) {
+        if (temp == currentTS["answer"][i] || temp.toUpperCase() == currentTS["answer"][i]) {
           results.push(currentAnswer[(i + 1).toString()] + " is Correct ✅");
         } else {
           results.push(currentAnswer[(i + 1).toString()] + " is incorrect ❎");
