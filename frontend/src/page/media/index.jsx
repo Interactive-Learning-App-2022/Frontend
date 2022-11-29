@@ -9,6 +9,7 @@ import {
   faPlay,
   faVolumeLow,
 } from "@fortawesome/free-solid-svg-icons";
+import swal from 'sweetalert';
 
 const _mm = new MUtil();
 
@@ -107,7 +108,15 @@ export default function App() {
       string = string + "\n" + (i + 1).toString() + ": " + results[i];
       i = i + 1;
     }
-    alert(string);
+    if (result) {
+      swal({
+        title: "Good job!",
+        text: "All your answers are correct!",
+        icon: "success"
+      });
+    } else {
+      swal("Evaluation Complete", string);
+    }
     if ("pass" in currentTS && currentTS["type"] == "assess") {
       if (result) {
         setCurrentNext(currentTS["pass"]);
