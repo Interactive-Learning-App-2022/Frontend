@@ -54,6 +54,7 @@
     "react-youtube": "^9.0.3",
     "reactstrap": "^8.1.1",
     "simditor": "2.3.6",
+    "sweetalert": "^2.1.2",
     "terser-webpack-plugin": "^2.2.1",
     "use-sound": "^4.0.1",
     "vue": "^2.6.10",
