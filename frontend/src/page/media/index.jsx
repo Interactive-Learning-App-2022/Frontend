@@ -1,3 +1,4 @@
+
 //import { Link }     from 'react-router-dom';
 import MUtil from "util/mm.jsx";
 import { VueInReact } from "vuera";
@@ -8,7 +9,9 @@ import {
   faPause,
   faPlay,
   faVolumeLow,
+  faL,
 } from "@fortawesome/free-solid-svg-icons";
+
 
 const _mm = new MUtil();
 
@@ -40,11 +43,11 @@ export default function App() {
   // const [url, setUrl] = useState("https://www.youtube.com/watch?v=EQKATpGKyKM")
   //const [url, setUrl] = useState("http://www.youtube.com/watch?v=HjvuZ56Q9g")
   const [url, setUrl] = useState("https://youtu.be/HJzvuZ56Q9g");
-
+  const[course, setCourse] = useState("Math");
   // segment jumps work best when both the TS end and next TS start are not the same
-  const apiCall = JSON.parse(
+  const[apiCall, setapiCall] = useState(JSON.parse(
     '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "assess", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "pass":297, "fail": 187, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, {"start": 414, "end": 417, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
-  );
+  ));
 
   const player = useRef(null);
 
@@ -70,9 +73,9 @@ export default function App() {
             setCont(true);
             setCurrentNext(currentTS["next"]);
           }
-        }
+          }
+        }          
       }
-    }
   }, [elapsed]);
 
   useEffect(() => {
@@ -110,6 +113,9 @@ export default function App() {
     alert(string);
     if ("pass" in currentTS && currentTS["type"] == "assess") {
       if (result) {
+        if(subject == "English"){
+          goodJob.play()
+        }
         setCurrentNext(currentTS["pass"]);
         //Put in the start fin
         if (currentTS["start"] == "598" && subject=="Math") {
@@ -118,7 +124,19 @@ export default function App() {
           console.log(finishbool);
         }
       } else {
+        // setCurrentNext(currentTS["fail"]);
+        if(subject== "English" && currentTS["tried"]==0){
+        needHelp.play();
         setCurrentNext(currentTS["fail"]);
+        currentTS["tried"] = 1;
+        }
+        else if (subject == "English" && currentTS["tried"]==1){
+          setCurrentNext(currentTS["pass"]);
+        }
+        else{
+          setCurrentNext(currentTS["fail"]);
+        }
+
       }
     } else {
       //for the walkthroughs
@@ -129,6 +147,13 @@ export default function App() {
   };
 
   const handleContClick = () => {
+    //to say "Now pick the best definitions next to me" in the english video
+    if(subject == "English"){
+    if(currentTS["type"] == "normal"){
+      definitions.play();
+      setPlaying(false);
+    }
+  }
     player.current.seekTo(currentNext, "seconds");
     setPlaying(true);
     setCont(false);
@@ -154,12 +179,27 @@ export default function App() {
 
   //switch videos
   const handleCourseClick = () => {
-    if (url == "https://www.youtube.com/watch?v=EQKATpGKyKM" || url == "https://youtu.be/HJzvuZ56Q9g") {
-      setUrl("https://www.youtube.com/watch?v=Vascnx8yk8o");
+    if (url == "https://youtu.be/HJzvuZ56Q9g") {
+      setUrl("https://youtu.be/Kd1WOEqiOnQ");
       setSubject("English"); 
+      setapiCall(JSON.parse(
+          '[{"start": 0, "end": 223, "type": "normal", "content": "", "next": 224}, {"tried": 0, "start": 224, "end": 226, "type": "assess", "content": "Which of the following definitions describes the word runt?\\nA) Very small and weak\\nB)Never amount to anything\\nC)To do away with\\n\\nType either A, B or C\\n__", "pass": 227, "fail": 146, "answer": ["A"]}, \
+          {"start": 227, "end": 304, "type": "normal", "content": "", "next": 305}, {"tried": 0, "start": 305, "end": 307, "type": "assess", "content": "Which of the following definitions describes the word injustice?\\nA) Different\\nB)Unfair\\nC)Hanging on\\n\\nType either A, B or C\\n__", "pass": 308, "fail": 285, "answer": ["B"]}, \
+          {"start": 308, "end": 409, "type": "normal", "content": "", "next": 410 }, {"tried": 0, "start": 410, "end": 411, "type": "assess", "content": "Which of the following definitions describes the word promptly?\\nA) Distribute\\nB)Injustice\\nC)Early or quickly\\n\\nType either A, B or C\\n__", "pass": 412, "fail": 345, "answer": ["C"]}, \
+          {"start": 412, "end": 491, "type": "normal", "content": "", "next": 492 }, {"tried": 0, "start": 492, "end": 493, "type": "assess", "content": "Which of the following definitions describes the word vanished?\\nA) Waited\\nB)Disappeared\\nC)Stand and watch\\n\\nType either A, B or C\\n__", "pass": 494, "fail": 460, "answer": ["B"]}, \
+          {"start": 494, "end": 589, "type": "normal", "content": "", "next": 590 }, {"tried": 0, "start": 590, "end": 592, "type": "assess", "content": "Which of the following definitions describes the word stool?\\nA) Pen\\nB)Type of goose\\nC)Chair\\n\\nType either A, B or C\\n__", "pass": 593, "fail": 560, "answer": ["C"]}, \
+          {"start": 593, "end": 705, "type": "normal", "content": "", "next": 706 }, {"tried": 0, "start": 706, "end": 707, "type": "assess", "content": "Which of the following definitions describes the word squeezed?\\nA) Pushed through\\nB)Standing\\nC)Walking\\n\\nType either A, B or C\\n__", "pass": 708, "fail": 625, "answer": ["A"]}, \
+          {"start": 708, "end": 783, "type": "normal", "content": "", "next": 784 }, {"tried": 0, "start": 784, "end": 785, "type": "assess", "content": "Which of the following definitions describes the word appetizing?\\nA) Smelly\\nB)Yummy\\nC)Ugly\\n\\nType either A, B or C\\n__", "pass": 791, "fail": 724, "answer": ["B"]}, \
+          {"start": 791, "end": 793, "type": "normal", "content": ""}\
+          ]'
+        ));
     } else {
-      setUrl("https://www.youtube.com/watch?v=EQKATpGKyKM");
+      setUrl("https://youtu.be/HJzvuZ56Q9g");
       setSubject("Math"); 
+      setapiCall(JSON.parse(
+        '[{"start": 0, "end": 183, "type": "normal", "content": "", "next": 187}, {"start": 187, "end": 294, "type": "walk", "content": "7 + 3 = 10\\n__ + __ = 10\\n\\n5 x 4 = 20\\n__ x __ = 20", "next": 297, "answer": ["3", "7", "4", "5"]}, {"start": 297, "end": 323, "type": "assess", "content": "6 + 2 =\\n__ + __ =\\n\\n8 x 3 =\\n__ x __ =", "pass": 414, "fail": 423, "answer": ["2", "6", "3", "8"]}, \
+        {"start": 414, "end": 418, "type": "normal", "content": "", "next": 598}, {"start": 423, "end": 593, "type": "normal", "content": "", "next": 598 }, {"start": 598, "end": 606, "type": "assess", "content": "4 + 9 = __\\n__ + __ = __\\n\\n7 x 2 = __\\n__ x __ = __\\n\\n5 + 15 = __\\n__ + __ = __", "pass": 414, "fail": 423, "answer": ["13", "9", "4", "13", "14", "2", "7", "14", "20", "15", "5", "20"], "next": 423}]'
+      ));
     }
   };
 
@@ -173,7 +213,7 @@ export default function App() {
         let temp = currentAnswer[(i + 1).toString()];
         //to ignore whitespaces from user input
         temp = temp.replace(/\s+/g, "");
-        if (temp == currentTS["answer"][i]) {
+        if (temp == currentTS["answer"][i] || temp.toUpperCase() == currentTS["answer"][i]) {
           results.push(currentAnswer[(i + 1).toString()] + " is Correct ✅");
         } else {
           results.push(currentAnswer[(i + 1).toString()] + " is incorrect ❎");
@@ -248,6 +288,7 @@ export default function App() {
             ref={player}
             onProgress={handleProgress}
             controls={false}
+            // controls={true}
             playing={playing}
             onPlay={() => {
               setPlaying(true);
@@ -319,3 +360,4 @@ export default function App() {
     </div>
   );
 }
+
